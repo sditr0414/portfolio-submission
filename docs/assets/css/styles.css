@@ -816,3 +816,7 @@ html:has(body.exporting), body.exporting { background: transparent; }
   .opencv-note{font-size:14px;line-height:1.75;margin-top:22px}
   .opencv-gui-copy{font-size:16px}
 }
+
+/* Full source presentation access */
+.presentation-link{display:inline-flex;align-items:center;min-height:18px;font-size:12px;font-weight:600;color:#315b7d;white-space:nowrap;text-decoration:none;border-bottom:1px solid #acbfd1}.presentation-link:hover{color:#18344d;border-color:currentColor}.presentation-link:focus-visible{outline:3px solid #5d91c5;outline-offset:4px}
+@container artboard (max-width:720px){.slide-footer:has(.presentation-link){flex-wrap:wrap;gap:8px 16px}.presentation-link{order:3;flex-basis:100%;min-height:44px;border-top:1px solid #d9dfe5;border-bottom:0;font-size:13px}.slide-footer:has(.presentation-link)>.slide-count{margin-left:auto}}

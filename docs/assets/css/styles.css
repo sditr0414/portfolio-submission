@@ -280,7 +280,7 @@ h1,h2,h3,h4{color:var(--ink)}
 /* Put the physical work first; keep role, stack and demo together. */
 .main-figure img,.robot-figure img{height:256px}
 .vision-figure img,.plc-figure img,.thesis-figure img{height:288px}
-.project-actions .video-button{order:-1}
+.project-actions :is(.video-button,.presentation-link){order:-1}
 .overview{grid-template-columns:1.12fr 1fr;gap:32px}
 .overview-copy{order:2}
 .overview>.main-figure{order:1}
@@ -368,8 +368,8 @@ dialog::backdrop{background:rgba(13,27,41,.86)}
 .print-slot{outline-color:var(--line)}
 .note-line{border-color:#dfe5ea}
 /* Video is the primary project action, with native playback and fullscreen. */
-.video-button{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:9px 16px;border:1px solid var(--deep);border-radius:3px;background:var(--deep);color:#fff;font-size:14px;font-weight:600;line-height:24px;white-space:nowrap}
-.video-button:hover{background:#294e6c;border-color:#294e6c}
+:is(.video-button,.presentation-link){display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:9px 16px;border:1px solid var(--deep);border-radius:3px;background:var(--deep);color:#fff;font-size:14px;font-weight:600;line-height:24px;white-space:nowrap}
+:is(.video-button,.presentation-link):hover{background:#294e6c;border-color:#294e6c}
 .video-button svg{width:18px;height:18px;fill:currentColor;flex-shrink:0}
 #media-dialog.is-video{width:min(1280px,96vw)}
 .is-video #dialog-content{padding:0;background:#101820;max-height:calc(94dvh - 90px)}
@@ -428,7 +428,7 @@ dialog::backdrop{background:rgba(13,27,41,.86)}
   .project-nav{top:104px}
   .page-shell+.page-shell{margin-top:24px}
   .slide{scroll-margin-top:122px}
-  .project-actions .video-button{width:100%}
+  .project-actions :is(.video-button,.presentation-link){width:100%}
   .is-video #dialog-content,.is-video #dialog-content video{max-height:calc(94dvh - 125px)}
 }
 /* Preserve contiguous artboards when rendering the two PDF formats. */
@@ -817,6 +817,5 @@ html:has(body.exporting), body.exporting { background: transparent; }
   .opencv-gui-copy{font-size:16px}
 }
 
-/* Full source presentation access */
-.presentation-link{display:inline-flex;align-items:center;min-height:18px;font-size:12px;font-weight:600;color:#315b7d;white-space:nowrap;text-decoration:none;border-bottom:1px solid #acbfd1}.presentation-link:hover{color:#18344d;border-color:currentColor}.presentation-link:focus-visible{outline:3px solid #5d91c5;outline-offset:4px}
-@container artboard (max-width:720px){.slide-footer:has(.presentation-link){flex-wrap:wrap;gap:8px 16px}.presentation-link{order:3;flex-basis:100%;min-height:44px;border-top:1px solid #d9dfe5;border-bottom:0;font-size:13px}.slide-footer:has(.presentation-link)>.slide-count{margin-left:auto}}
+
+.presentation-link{text-decoration:none}.presentation-link:focus-visible{outline:3px solid #5d91c5;outline-offset:4px}

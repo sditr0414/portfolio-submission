@@ -22,13 +22,16 @@ def build_preview(*, offline_fonts: bool=False, include_pdfs: bool=True) -> str:
             style=soup.new_tag('style');style.string=(ROOT/'assets/css/styles.css').read_text(encoding='utf-8');link.replace_with(style)
         elif offline_fonts: link.decompose()
     for el in soup.find_all(True):
-        for attr in ('src','data-image','data-video','data-src','poster'):
+        for attr in ('src','data-image','data-video','data-src','poster','data-poster'):
             value=el.get(attr,'')
             if value.startswith(('assets/images/', 'assets/videos/')):
-                if value not in images:raise FileNotFoundError(value)
-                el[attr]=images[value]
-        if include_pdfs and el.get('href') in ('assets/pdf/slides.pdf','assets/pdf/handout.pdf'):
-            el['href']=data_uri(ROOT/el['href'])
+                asset=urlsplit(value).path
+                if asset not in images:raise FileNotFoundError(asset)
+                el[attr]=images[asset]
+        if el.name=='img':el['loading']='eager'
+        href=urlsplit(el.get('href','')).path
+        if include_pdfs and href in ('assets/pdf/slides.pdf','assets/pdf/handout.pdf'):
+            el['href']=data_uri(ROOT/href)
     app=(ROOT/'assets/js/app.js').read_text(encoding='utf-8')
     for name,uri in images.items():
         app=app.replace("'"+name+"'","'"+uri+"'").replace('"'+name+'"','"'+uri+'"')

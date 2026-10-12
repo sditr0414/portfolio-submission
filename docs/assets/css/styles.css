@@ -783,6 +783,7 @@ html:has(body.exporting), body.exporting { background: transparent; }
 .inline-demo{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:2px;background:var(--tint)}
 .inline-demo .video-poster{display:block;width:100%;height:288px;padding:0;object-fit:contain}
 .inline-demo-video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;background:var(--tint)}
+.inline-demo-video:not([src]){visibility:hidden}
 .inline-demo-error{position:absolute;inset:auto 0 0;margin:0;padding:10px;background:var(--deep);color:#fff;font-size:13px;line-height:1.6}
 .inline-demo-error a{color:inherit;text-decoration:underline}
 .inline-demo-error[hidden],.inline-demo-video[hidden]{display:none}

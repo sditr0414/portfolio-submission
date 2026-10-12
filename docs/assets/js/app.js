@@ -132,6 +132,7 @@
   document.addEventListener('keydown',event=>{if(event.key==='Escape'){closeNav({returnFocus:true});}});
   let current = slides[0];
   function markActive() {
+    const previous = current;
     const top = window.innerWidth <= 1230 ? 108 : 78;
     current = slides[0];
     let largest = -1;
@@ -155,6 +156,7 @@
     $('#mobile-current').textContent = `${current.dataset.title}${group.length>1?` · ${part}/${group.length}`:''}`;
     const pagePosition = `${String(index).padStart(2,'0')} / ${slides.length}`;
     $('#mobile-count').textContent = pagePosition;
+    if (current !== previous) document.dispatchEvent(new CustomEvent('portfolio:pagechange'));
   }
   let scheduled=false;
   window.addEventListener('scroll',()=>{
@@ -179,6 +181,7 @@
     clone.removeAttribute('aria-labelledby');
     $$('[id]',clone).forEach(el=>el.removeAttribute('id'));
     $$('video',clone).forEach(el=>el.remove());
+    $$('img',clone).forEach(img=>{img.loading='eager';});
     shell.append(clone);
     return shell;
   }
@@ -224,6 +227,7 @@
     try {
       if(dialog.open)dialog.close();closeNav();requestedMode=mode;
       await document.fonts.ready;
+      $$('main img').forEach(img=>{img.loading='eager';});
       await Promise.all($$('main img').map(img=>img.decode().catch(()=>{})));
       preparePrint(mode);
       notify(mode==='slides'
@@ -275,32 +279,54 @@
     setOutputMode(mode){requestedMode=mode;return preparePrint(mode);},get slides(){return slides;}};
 })();
 
-// Inline demos load and play only while they are visible.
+// Prioritize visible demos and prepare only the next project's media.
 (() => {
   const videos = [...document.querySelectorAll('main .inline-demo-video')];
   const records = new Map(videos.map(video => [video, {visible:false, manualPause:false}]));
   const dialog = document.querySelector('#media-dialog');
+  const slides = window.Portfolio.slides;
+  let warmTimer = 0;
   let printing = false;
   const suspended = () => document.hidden || printing || document.body.classList.contains('exporting') || dialog.open;
+  function prepare(video, preload = 'auto') {
+    video.preload = preload;
+    if (!video.getAttribute('src')) {
+      video.poster = video.dataset.poster;
+      video.controls = true;
+      video.src = video.dataset.src;
+    }
+  }
+  function scheduleWarm() {
+    clearTimeout(warmTimer);
+    warmTimer = setTimeout(() => {
+      const connection = navigator.connection;
+      if (suspended() || connection?.saveData || ['slow-2g','2g'].includes(connection?.effectiveType)) return;
+      if (videos.some(video => records.get(video).visible && video.readyState < 3 && !video.error)) return;
+      const index = slides.indexOf(window.Portfolio.current);
+      const next = slides.slice(index + 1).find(slide => slide.querySelector('.inline-demo-video'));
+      next?.querySelectorAll('.inline-demo-video').forEach(video => {
+        if (!video.getAttribute('src')) prepare(video, 'metadata');
+      });
+    }, 600);
+  }
   function update(video) {
     const state = records.get(video);
     if (state.visible && !state.manualPause && !suspended()) {
-      if (!video.getAttribute('src')) {
-        video.src = video.dataset.src;
-        video.controls = true;
-      }
+      prepare(video);
       video.play().catch(() => {}); // Native controls remain available if autoplay is blocked.
     } else if (!video.paused) video.pause();
   }
   const updateAll = () => videos.forEach(update);
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
-      records.get(entry.target).visible = entry.isIntersecting && entry.intersectionRatio >= .25;
+      records.get(entry.target).visible = entry.isIntersecting && entry.intersectionRatio >= .05;
       update(entry.target);
     }
-  }, {threshold:[0,.25], root:document.querySelector('#main')});
+  }, {threshold:[0,.05], root:document.querySelector('#main')});
   for (const video of videos) {
     video.muted = true;
+    video.autoplay = false; // The visibility observer owns playback, including prefetched media.
+    video.addEventListener('canplay', scheduleWarm);
     video.addEventListener('pause', () => {
       const state = records.get(video);
       if (video.paused && state.visible && !suspended()) state.manualPause = true;
@@ -317,10 +343,21 @@
     observer.observe(video);
   }
   document.addEventListener('visibilitychange', updateAll);
+  document.addEventListener('portfolio:pagechange', scheduleWarm);
+  document.addEventListener('pointerover', event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || suspended()) return;
+    const target = document.getElementById(link.hash.slice(1));
+    if (!target?.matches('.slide')) return;
+    target.querySelectorAll('.inline-demo-video').forEach(video => {
+      if (!video.getAttribute('src') && !navigator.connection?.saveData) prepare(video, 'metadata');
+    });
+  });
   addEventListener('beforeprint', () => {printing = true; updateAll();});
   addEventListener('afterprint', () => {printing = false; updateAll();});
   new MutationObserver(updateAll).observe(document.body, {attributes:true, attributeFilter:['class']});
   new MutationObserver(updateAll).observe(dialog, {attributes:true, attributeFilter:['open']});
+  scheduleWarm();
 })();
 
 // Presentation navigation

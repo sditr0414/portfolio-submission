@@ -22,7 +22,7 @@ def build_preview(*, offline_fonts: bool=False, include_pdfs: bool=True) -> str:
             style=soup.new_tag('style');style.string=(ROOT/'assets/css/styles.css').read_text(encoding='utf-8');link.replace_with(style)
         elif offline_fonts: link.decompose()
     for el in soup.find_all(True):
-        for attr in ('src','data-image','data-video'):
+        for attr in ('src','data-image','data-video','data-src','poster'):
             value=el.get(attr,'')
             if value.startswith(('assets/images/', 'assets/videos/')):
                 if value not in images:raise FileNotFoundError(value)

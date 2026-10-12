@@ -779,13 +779,25 @@ html:has(body.exporting), body.exporting { background: transparent; }
   .deck-ready.deck-reading .cover .portrait img { width: 80px; height: 101px; }
 }
 
-/* Project evidence: demo posters share the existing media dialog. */
-.demo-poster{display:block;position:relative;width:100%;padding:0;border:1px solid var(--line);background:var(--tint);overflow:hidden;border-radius:2px}
-.demo-poster img{display:block;width:100%;object-fit:contain}
-.poster-play{position:absolute;bottom:12px;left:12px;padding:8px 12px;border-radius:3px;background:var(--deep);color:#fff;font-size:13px;font-weight:600;line-height:1.5}
-.demo-poster:hover .poster-play{background:#294e6c}
-.opencv-demo-figure img{height:288px}
-.travel-demo-figure img{height:288px}
+/* Project evidence: native autoplay videos retain a still frame for print. */
+.inline-demo{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:2px;background:var(--tint)}
+.inline-demo .video-poster{display:block;width:100%;height:288px;padding:0;object-fit:contain}
+.inline-demo-video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;background:var(--tint)}
+.inline-demo-error{position:absolute;inset:auto 0 0;margin:0;padding:10px;background:var(--deep);color:#fff;font-size:13px;line-height:1.6}
+.inline-demo-error a{color:inherit;text-decoration:underline}
+.inline-demo-error[hidden],.inline-demo-video[hidden]{display:none}
+.travel-inline-videos{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.travel-inline-videos .video-poster{height:205px}
+.travel-inline-videos figcaption{margin-top:6px}
+.travel-inline-copy{margin-top:18px}
+.travel-inline-copy .tags{margin-top:10px}
+.exporting .inline-demo-video,#print-root .inline-demo-video{display:none!important}
+@media print{.inline-demo-video{display:none!important}}
+@media screen and (max-width:999px) and (min-height:540px){
+  .deck-ready.deck-reading .inline-demo .video-poster{height:auto;max-height:300px}
+  .travel-inline-videos{grid-template-columns:1fr;gap:22px}
+  .travel-inline-copy{margin-top:24px}
+}
 .opencv-screen img{height:auto;width:100%;object-fit:contain}
 .opencv-screen .image-open{padding:0;background:var(--tint);border:1px solid var(--line)}
 .opencv-system-layout{grid-template-columns:1.12fr 1fr;gap:28px;align-items:start}
@@ -797,12 +809,9 @@ html:has(body.exporting), body.exporting { background: transparent; }
 .opencv-detail-layout .issue-table{table-layout:fixed}
 .opencv-detail-layout .issue-table th:first-child{width:30%}
 .opencv-detail-layout .issue-table td,.opencv-detail-layout .issue-table tbody th{padding:11px 12px;font-size:15px;line-height:1.65}
-.travel-demo-actions{gap:10px 14px}
-.travel-demo-actions .video-button{padding-inline:11px}
 @media screen and (max-width:999px) and (min-height:540px){
   .opencv-system-layout,.opencv-detail-layout{display:flex;flex-direction:column;gap:24px}
   .opencv-system-layout>*,.opencv-detail-layout>*{width:100%}
-  .opencv-demo-figure img,.travel-demo-figure img{height:auto;max-height:300px}
   .opencv-note{font-size:14px;line-height:1.75;margin-top:22px}
   .opencv-gui-copy{font-size:16px}
 }

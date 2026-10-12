@@ -178,6 +178,7 @@
     clone.removeAttribute('id'); clone.removeAttribute('tabindex');
     clone.removeAttribute('aria-labelledby');
     $$('[id]',clone).forEach(el=>el.removeAttribute('id'));
+    $$('video',clone).forEach(el=>el.remove());
     shell.append(clone);
     return shell;
   }
@@ -272,6 +273,54 @@
   }
   window.Portfolio={markActive,get current(){return current;},preparePrint,printPortfolio,setExportMode,
     setOutputMode(mode){requestedMode=mode;return preparePrint(mode);},get slides(){return slides;}};
+})();
+
+// Inline demos load and play only while they are visible.
+(() => {
+  const videos = [...document.querySelectorAll('main .inline-demo-video')];
+  const records = new Map(videos.map(video => [video, {visible:false, manualPause:false}]));
+  const dialog = document.querySelector('#media-dialog');
+  let printing = false;
+  const suspended = () => document.hidden || printing || document.body.classList.contains('exporting') || dialog.open;
+  function update(video) {
+    const state = records.get(video);
+    if (state.visible && !state.manualPause && !suspended()) {
+      if (!video.getAttribute('src')) {
+        video.src = video.dataset.src;
+        video.controls = true;
+      }
+      video.play().catch(() => {}); // Native controls remain available if autoplay is blocked.
+    } else if (!video.paused) video.pause();
+  }
+  const updateAll = () => videos.forEach(update);
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      records.get(entry.target).visible = entry.isIntersecting && entry.intersectionRatio >= .25;
+      update(entry.target);
+    }
+  }, {threshold:[0,.25], root:document.querySelector('#main')});
+  for (const video of videos) {
+    video.muted = true;
+    video.addEventListener('pause', () => {
+      const state = records.get(video);
+      if (video.paused && state.visible && !suspended()) state.manualPause = true;
+    });
+    video.addEventListener('play', () => {
+      const state = records.get(video);
+      state.manualPause = false;
+      if (!state.visible || suspended()) video.pause();
+    });
+    video.addEventListener('error', () => {
+      video.hidden = true;
+      video.parentElement.querySelector('.inline-demo-error').hidden = false;
+    }, {once:true});
+    observer.observe(video);
+  }
+  document.addEventListener('visibilitychange', updateAll);
+  addEventListener('beforeprint', () => {printing = true; updateAll();});
+  addEventListener('afterprint', () => {printing = false; updateAll();});
+  new MutationObserver(updateAll).observe(document.body, {attributes:true, attributeFilter:['class']});
+  new MutationObserver(updateAll).observe(dialog, {attributes:true, attributeFilter:['open']});
 })();
 
 // Presentation navigation
@@ -541,7 +590,7 @@
   }, true);
   document.addEventListener('keydown', event => {
     if (!desktop.matches || exporting || event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || document.querySelector('dialog[open]') ||
-        event.target.closest('button,input,textarea,select,[contenteditable="true"]')) return;
+        event.target.closest('button,input,textarea,select,video,[contenteditable="true"]')) return;
     const steps = {ArrowDown: 1, PageDown: 1, ' ': event.shiftKey ? -1 : 1, ArrowUp: -1, PageUp: -1};
     if (!(event.key in steps) && event.key !== 'Home' && event.key !== 'End') return;
     event.preventDefault();

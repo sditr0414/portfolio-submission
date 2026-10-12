@@ -8,10 +8,11 @@
 ## 프로젝트
 
 프로젝트명을 누르면 제작물, 담당 범위와 구현 결과를 볼 수 있습니다.<br>
-로봇·보행 보조·PLC·노크 위치 탐지 프로젝트에는 시연 영상도 담았습니다.
+각 프로젝트의 첫 페이지에서 시연 영상을 볼 수 있습니다.
 
 | 프로젝트 | 담당 역할 | 사용 기술 |
 | --- | --- | --- |
+| [OpenCV 기반<br>로봇팔 티칭](https://sditr0414.github.io/#opencv) | 교육 최종 프로젝트. 지그 검출·좌표 보정·티칭 GUI 구성, PC·Pi 계산 기준 동기화 | Python, OpenCV, FK·IK, SO-101, Raspberry Pi |
 | [원격 물품<br>회수·운반 로봇](https://sditr0414.github.io/#robot) | 1주·5인 팀 프로젝트. 조장으로 로봇팔 제작·제어와 펌웨어 통합 담당 | C, STM32, FreeRTOS, Bluetooth |
 | [AI 기반<br>보행 보조 장치](https://sditr0414.github.io/#vision) | 데이터 라벨 통합, 모델 학습·변환, ROI와 알림 판단 로직 구성 | Python, OpenCV, YOLO, TFLite |
 | [PLC 기반<br>창고 적재 제어](https://sditr0414.github.io/#plc) | 병렬 처리 로직과 HMI 작성, 메모리 상태에 따른 오동작 수정 | Mitsubishi Q PLC, GX Works2, GT Designer3 |
@@ -25,7 +26,7 @@
 - **대한상공회의소 서울기술교육센터**<br>
   AI융합 로봇 SW개발자 3기 · 2026.04–11 · 교육 중
 
-*2026년 9월 기준*
+*2026년 10월 기준*
 
 ## 모바일에서 보기
 

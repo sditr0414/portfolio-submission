@@ -802,8 +802,8 @@ html:has(body.exporting), body.exporting { background: transparent; }
 .opencv-screen img{height:auto;width:100%;object-fit:contain}
 .opencv-screen .image-open{padding:0;background:var(--tint);border:1px solid var(--line)}
 .opencv-system-layout{grid-template-columns:1.12fr 1fr;gap:28px;align-items:start}
-.opencv-detail-layout{grid-template-columns:1fr 1.1fr;gap:26px;align-items:start}
-.opencv-detail-layout .opencv-screen img{max-height:240px}
+.opencv-detail-layout{grid-template-columns:1.12fr 1fr;gap:28px;align-items:center}
+.opencv-detail-layout .opencv-screen img{max-height:320px}
 .opencv-gui-copy{margin-top:16px;font-size:16px;line-height:1.7}
 .opencv-note{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;line-height:1.65;color:var(--muted)}
 .opencv-note b{color:var(--ink);margin-right:8px}
@@ -819,3 +819,5 @@ html:has(body.exporting), body.exporting { background: transparent; }
 
 
 .presentation-link:focus-visible{outline:3px solid #5d91c5;outline-offset:4px}
+
+.opencv-detail-layout .gui-demo .video-poster{height:auto;aspect-ratio:16/9;max-height:none}

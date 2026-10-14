@@ -2,8 +2,20 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const key = new URLSearchParams(location.search).get('project');
+  function returnUrl() {
+    const raw = new URLSearchParams(location.search).get('return');
+    if (raw) {
+      try {
+        const url = new URL(raw, location.href);
+        const home = new URL('index.html', location.href);
+        if (url.origin === home.origin && url.pathname === home.pathname) return url.href;
+      } catch {}
+    }
+    return `index.html#${encodeURIComponent(key || 'projects')}`;
+  }
+  $('back').href = returnUrl();
   let deck, current = 1, requested = 0;
-  const source = n => `assets/presentations/${key}/${String(n).padStart(2, '0')}.webp`;
+  const source = n => `assets/presentations/${key}/${String(n).padStart(2, '0')}.webp?v=20261014repair`;
   const pageFromHash = () => Number(location.hash.match(/^#slide-(\d+)$/)?.[1] || 1);
   function show(number, updateHash = true) {
     const n = Math.max(1, Math.min(deck.count, Math.trunc(number) || 1));
@@ -37,7 +49,7 @@
   }
   async function init() {
     try {
-      const response = await fetch('assets/presentations/manifest.json?v=20261012');
+      const response = await fetch('assets/presentations/manifest.json?v=20261014repair');
       if (!response.ok) throw new Error('manifest');
       const decks = await response.json();
       if (!Object.hasOwn(decks, key)) {
@@ -49,8 +61,8 @@
       document.title = `${deck.title} · 전체 발표자료 | 정승호`;
       $('title').textContent = deck.title;
       if (deck.sourceNote) { $('source-note').textContent = deck.sourceNote; $('source-note').hidden = false; }
-      $('back').href = `./#${key}`;
-      $('download').href = `assets/presentations/${key}/slides.pdf`;
+      $('back').href = returnUrl();
+      $('download').href = `assets/presentations/${key}/slides.pdf?v=20261014repair`;
       $('download').download = `${deck.title}_전체발표자료.pdf`;
       $('download').hidden = false;
       $('total').textContent = `/ ${deck.count}`;

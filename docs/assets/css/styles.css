@@ -821,3 +821,12 @@ html:has(body.exporting), body.exporting { background: transparent; }
 .presentation-link:focus-visible{outline:3px solid #5d91c5;outline-offset:4px}
 
 .opencv-detail-layout .gui-demo .video-poster{height:auto;aspect-ratio:16/9;max-height:none}
+
+/* Separate project resources from the explanatory copy. */
+.overview{align-items:stretch}
+.overview-copy{display:flex;flex-direction:column}
+.overview-copy .project-actions{margin-top:auto;padding-top:28px;min-height:44px;align-items:center}
+.travel-inline-copy .project-actions{margin-top:28px}
+@media screen and (max-width:999px) and (min-height:540px){
+  .overview-copy .project-actions{margin-top:24px;padding-top:0}
+}

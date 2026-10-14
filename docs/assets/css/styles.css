@@ -830,3 +830,5 @@ html:has(body.exporting), body.exporting { background: transparent; }
 @media screen and (max-width:999px) and (min-height:540px){
   .overview-copy .project-actions{margin-top:24px;padding-top:0}
 }
+
+.opencv-system-layout .jig-demo .video-poster{height:auto;aspect-ratio:810/456}

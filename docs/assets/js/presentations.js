@@ -15,7 +15,7 @@
   }
   $('back').href = returnUrl();
   let deck, current = 1, requested = 0;
-  const source = n => `assets/presentations/${key}/${String(n).padStart(2, '0')}.webp?v=20261014report`;
+  const source = n => `assets/presentations/${key}/${String(n).padStart(2, '0')}.webp?v=20261014trim`;
   const pageFromHash = () => Number(location.hash.match(/^#slide-(\d+)$/)?.[1] || 1);
   function show(number, updateHash = true) {
     const n = Math.max(1, Math.min(deck.count, Math.trunc(number) || 1));
@@ -49,7 +49,7 @@
   }
   async function init() {
     try {
-      const response = await fetch('assets/presentations/manifest.json?v=20261014report');
+      const response = await fetch('assets/presentations/manifest.json?v=20261014trim');
       if (!response.ok) throw new Error('manifest');
       const decks = await response.json();
       if (!Object.hasOwn(decks, key)) {
@@ -62,7 +62,7 @@
       $('title').textContent = deck.title;
       if (deck.sourceNote) { $('source-note').textContent = deck.sourceNote; $('source-note').hidden = false; }
       $('back').href = returnUrl();
-      $('download').href = `assets/presentations/${key}/slides.pdf?v=20261014report`;
+      $('download').href = `assets/presentations/${key}/slides.pdf?v=20261014trim`;
       $('download').download = `${deck.title}_전체발표자료.pdf`;
       $('download').hidden = false;
       $('total').textContent = `/ ${deck.count}`;

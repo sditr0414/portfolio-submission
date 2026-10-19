@@ -29,13 +29,9 @@ def finalize(path:Path,items:list[dict],handout:bool=False)->None:
             # artboard so viewers never show the blank strip (mediabox is in PDF bottom-up units).
             top=pg.mediabox.y1
             pg.set_mediabox(fitz.Rect(0,top-HEIGHT*.75,WIDTH*.75,top))
+        # Submission PDFs carry no clickable links (buttons and tabs are hidden in export/print CSS).
         for lnk in pg.get_links():
-            dest=lnk.get('nameddest','')
-            if dest in lookup:
-                n=lookup[dest];pg.delete_link(lnk)
-                pg.insert_link({'kind':fitz.LINK_GOTO,'from':lnk['from'],
-                    'page':n//2 if handout else n,
-                    'to':fitz.Point(0,0)})
+            pg.delete_link(lnk)
     toc=[];previous=None
     for n,item in enumerate(items):
         level=2 if previous==item['project'] else 1

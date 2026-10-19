@@ -49,7 +49,7 @@ def geometry_script(selector):
         footerTop:f.top-r.top,
         bodyBottom:Math.max(...[...s.querySelector('.slide-body').children].map(c=>c.getBoundingClientRect().bottom))-r.top,
         text:s.innerText,
-        styles:[...s.querySelectorAll('h1,h2,h3,p,img')].map(e=>{let c=getComputedStyle(e),b=e.getBoundingClientRect();return{tag:e.tagName,font:c.fontSize,family:c.fontFamily,line:c.lineHeight,width:b.width,height:b.height,x:b.left-r.left,y:b.top-r.top};})
+        styles:[...s.querySelectorAll('h1,h2,h3,p,img')].filter(e=>e.getClientRects().length).map(e=>{let c=getComputedStyle(e),b=e.getBoundingClientRect();return{tag:e.tagName,font:c.fontSize,family:c.fontFamily,line:c.lineHeight,width:b.width,height:b.height,x:b.left-r.left,y:b.top-r.top};})
       };
     })'''.replace('SELECTOR',json.dumps(selector))
 

@@ -832,7 +832,6 @@ html:has(body.exporting), body.exporting { background: transparent; }
 }
 
 .opencv-system-layout .jig-demo .video-poster{height:auto;aspect-ratio:810/456}
-/* PDF·인쇄 출력: 링크 버튼과 페이지 탭을 표시하지 않음 (2026-10-19) */
-.exporting .stage-nav,.exporting .project-actions,.exporting .contact-links .text-link,.exporting .skills-heading .text-link,.exporting .resume-tools,
-#print-root .stage-nav,#print-root .project-actions,#print-root .contact-links .text-link,#print-root .skills-heading .text-link,#print-root .resume-tools{visibility:hidden!important}
+/* 제출용: 화면·PDF·인쇄 모두 링크 버튼과 페이지 탭을 표시하지 않음 (2026-10-19) */
+.slide .stage-nav,.slide .project-actions,.slide .contact-links .text-link,.slide .skills-heading .text-link,.slide .resume-tools{display:none!important}
 .exporting .inline-demo-error,#print-root .inline-demo-error{visibility:hidden!important}

@@ -42,6 +42,38 @@ def finalize(path:Path,items:list[dict],handout:bool=False)->None:
         'author':'정승호','creator':'Portfolio web artboards / Chromium','subject':'화면과 동일한 페이지 디자인'})
     tmp=path.with_suffix('.tmp.pdf');doc.save(tmp,garbage=4,deflate=True);doc.close();tmp.replace(path)
 
+
+def pdf_font_css(text:str)->str:
+    """Chromium writes CFF (OpenType) fonts such as Noto Sans CJK as Type3 glyphs, which can corrupt
+    glyphs on some pages. Convert the used glyphs of the installed Noto Sans CJK KR faces to TrueType
+    outlines (same design and metrics) so the PDF embeds real fonts. Nothing is written to the repo."""
+    import base64,io
+    from fontTools.ttLib import TTCollection,newTable
+    from fontTools import subset
+    from fontTools.pens.cu2quPen import Cu2QuPen
+    from fontTools.pens.ttGlyphPen import TTGlyphPen
+    chars=set(text)|set(' 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz.,:;!?()[]{}<>/-–—_+=*&%#@\'"·×→←↗°²')
+    css=[]
+    for weight,face in [(400,'Regular'),(500,'Medium'),(700,'Bold'),(900,'Black')]:
+        coll=TTCollection(f'/usr/share/fonts/opentype/noto/NotoSansCJK-{face}.ttc')
+        font=next(f for f in coll.fonts if f['name'].getDebugName(1).startswith('Noto Sans CJK KR'))
+        opts=subset.Options();opts.layout_features=['*'];opts.name_IDs=['*'];opts.notdef_outline=True
+        sub=subset.Subsetter(opts);sub.populate(text=''.join(sorted(chars)));sub.subset(font)
+        gs=font.getGlyphSet();order=font.getGlyphOrder();glyphs={}
+        for g in order:
+            pen=TTGlyphPen(gs);gs[g].draw(Cu2QuPen(pen,1.0,reverse_direction=True));glyphs[g]=pen.glyph()
+        font['loca']=newTable('loca');glyf=font['glyf']=newTable('glyf');glyf.glyphOrder=order;glyf.glyphs=glyphs
+        del font['CFF ']
+        if 'VORG' in font:del font['VORG']
+        maxp=font['maxp']=newTable('maxp');maxp.tableVersion=0x00010000
+        for k in ('maxZones',):setattr(maxp,k,1)
+        for k in ('maxTwilightPoints','maxStorage','maxFunctionDefs','maxInstructionDefs','maxStackElements','maxSizeOfInstructions','maxComponentElements'):setattr(maxp,k,0)
+        font['head'].glyphDataFormat=0;font.sfntVersion='\x00\x01\x00\x00';font['post'].formatType=3.0
+        buf=io.BytesIO();font.save(buf)
+        css.append('@font-face{font-family:"PdfNotoKR";font-weight:%d;src:url(data:font/ttf;base64,%s) format("truetype")}'%(weight,base64.b64encode(buf.getvalue()).decode()))
+    css.append(':root{--font:"PdfNotoKR","Noto Sans CJK KR",sans-serif!important}')
+    return ''.join(css)
+
 def geometry_script(selector):
     return '''() => [...document.querySelectorAll(SELECTOR)].map(s=>{
       const r=s.getBoundingClientRect(),f=s.querySelector('.slide-footer').getBoundingClientRect();
@@ -63,6 +95,9 @@ def main():
         browser=pw.chromium.launch(executable_path=args.browser or shutil.which('chromium') or shutil.which('google-chrome'),headless=True,args=['--no-sandbox'])
         page=browser.new_page(viewport={'width':1440,'height':1000},device_scale_factor=1,reduced_motion='reduce')
         page.set_content(html,wait_until='load');page.evaluate('document.fonts.ready')
+        app_js=(ROOT/'docs'/'assets'/'js'/'app.js').read_text(encoding='utf-8')
+        page.add_style_tag(content=pdf_font_css(page.evaluate('document.documentElement.textContent')+app_js))
+        page.evaluate('document.fonts.ready')
         page.evaluate('Promise.all([...document.images].map(i=>i.decode()))')
         items=page.evaluate("()=>Portfolio.slides.map(s=>({id:s.id,project:s.dataset.project,title:s.querySelector('h2')?.textContent||'정승호 소개'}))")
         # Compare canonical artboards independently of the presentation viewport scale.

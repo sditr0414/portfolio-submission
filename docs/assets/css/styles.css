@@ -1022,3 +1022,5 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 #travel-detail .slide-body,#thesis-results .slide-body{justify-content:center}
 #travel-detail .workflow section{padding:24px 18px 26px}#travel-detail .case-grid section{padding:24px 20px 26px}
 .results-layout .acquisition-figure img{height:250px;max-height:none;width:auto;max-width:100%;margin:0 auto;display:block}
+/* cover photo sits near the top of its panel with clear space below, never at the panel's edge */
+.cover .portrait{align-self:start;margin-top:8px}

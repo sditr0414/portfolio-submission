@@ -213,7 +213,7 @@
           pair.append(note);
         }
         const footer=document.createElement('footer');footer.className='handout-footer';
-        footer.innerHTML=`<span>3095069@naver.com</span><span>${Math.floor(i/2)+1} / ${pages}</span>`;
+        footer.innerHTML=`<span>포트폴리오 ${Math.floor(i/2)+1} / ${pages}</span><span>정승호</span>`;
         page.append(heading,pair,footer);root.append(page);
       }
     }

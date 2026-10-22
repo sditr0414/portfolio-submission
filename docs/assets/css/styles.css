@@ -961,3 +961,52 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .issue-table td strong{color:var(--deep)}
 .process-list dd strong{color:var(--deep)}
 @media screen and (max-width:700px){.workflow section:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-20px;transform:translateX(-50%)}.workflow{gap:22px}}
+
+/* Revision 2026-10-22 c · cover in the detailed portfolio's navy, fuller cover copy, model decisions as cards, fuller lower halves */
+.cover{background:linear-gradient(150deg,#2c4964 0%,#14293d 100%)}
+.cover::after{background:rgba(255,255,255,.05);width:300px;height:390px}
+.cover .slide-top,.cover .slide-footer,.cover .skills-band,.cover .skill-grid section{border-color:rgba(255,255,255,.18)}
+.cover .slide-body{padding-top:20px}
+.hero-grid{grid-template-columns:1fr 210px;gap:60px;align-items:start}
+.cover .intro-label{font-size:14px;color:#c7d6e4;margin-bottom:10px;letter-spacing:.01em}
+.hero-copy h1{font-size:54px;gap:18px}.cover .name-english{font-size:13px;letter-spacing:.16em;color:#bcd0e2}
+.hero-line{font-size:25px;line-height:1.5;margin:14px 0 12px;font-weight:600}
+.contact-links{margin-top:6px;font-size:14px}
+.cover-projects{list-style:none;margin:18px 0 0;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.18);display:grid;grid-template-columns:1fr 1fr;gap:7px 28px;max-width:600px}
+.cover-projects a{display:flex;align-items:baseline;gap:9px;color:#e8f0f7;text-decoration:none;font-size:14.5px;line-height:1.5}
+.cover-projects a:hover{color:#fff;text-decoration:underline}
+.cover-projects b{font-size:11.5px;color:#9fb9d1;font-variant-numeric:tabular-nums;font-weight:700}
+.cover .portrait img{width:210px;height:258px}
+.cover .portrait{width:210px}
+.cover .skills-band{padding-top:14px}
+/* step-flow boxes share the navy top rule with the other cards on the slide; only the number badge carries the light-to-dark ramp */
+.workflow section{border-top-color:var(--deep)}
+/* model slide: three adopted decisions as cards */
+.s26-decisions{display:grid;gap:10px}
+.s26-dhead{font-size:13px;font-weight:700;color:var(--deep)}
+.s26-decisions section{padding:10px 16px 11px;background:var(--blue-tint);border:1px solid var(--blue-line);border-left:4px solid var(--deep);border-radius:0 4px 4px 0}
+.s26-decisions h3{display:flex;align-items:center;font-size:15px;margin:0 0 2px;color:var(--ink)}
+.s26-decisions .pick{display:inline-block;margin-left:7px;padding:0 6px;border-radius:3px;background:var(--deep);color:#fff;font-size:10.5px;font-weight:700;line-height:1.6}
+.s26-decisions .big{font-size:18px;color:var(--deep);margin:0 0 2px}.s26-decisions .big b{font-size:21px}
+.s26-decisions p{font-size:13px;line-height:1.5;color:#394b5d}
+.s26-two.model .s26-note{margin-top:8px}
+/* fuller lower halves */
+.s26-log .s26-table.log td{padding-top:10px;padding-bottom:10px;font-size:14.5px}
+.s26-log h3{font-size:16px}
+.thesis-results .s26-take,.results-layout .s26-take{margin-top:16px}
+.verify-strip{margin-top:20px}
+.travel-cases{margin-top:16px}
+.workflow section{padding:14px 16px 16px}
+.case-grid section{padding:14px 16px 16px}
+@media screen and (max-width:700px){.cover-projects{grid-template-columns:1fr}.hero-copy h1{font-size:38px}.hero-line{font-size:21px}}
+.s26-two.model .s26-table.data{margin-top:12px}
+.s26-two.model .s26-pair img{aspect-ratio:16/9}
+.s26-decisions{gap:12px}.s26-decisions section{padding:12px 16px 13px}
+.s26-log{grid-template-columns:1fr 64px 1.1fr}
+.s26-log .s26-table.log td{padding-top:12px;padding-bottom:12px}
+.s26-two.model .s26-table.data th,.s26-two.model .s26-table.data td{padding-top:5px;padding-bottom:5px}
+.s26-two.model .s26-mini.one{margin-top:6px}.s26-two.model .s26-mini.one>div{padding-top:5px}
+.s26-two.model .s26-table caption{padding-bottom:4px}
+.results-layout .result-table tbody th,.results-layout .result-table td{padding-top:12px;padding-bottom:12px}
+.results-layout .s26-take{margin-top:12px;font-size:13.5px;padding:8px 14px}
+.results-layout .acquisition-figure img{max-height:230px;object-fit:contain}

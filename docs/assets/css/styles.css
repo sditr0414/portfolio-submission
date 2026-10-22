@@ -1031,3 +1031,18 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 /* project 01 tags fit on one line */
 #opencv .tags{gap:5px;flex-wrap:nowrap}#opencv .tags span{padding:3px 6px;white-space:nowrap;font-size:10.5px}
 @media screen and (max-width:700px){#opencv .tags{flex-wrap:wrap}}
+
+/* Revision 2026-10-22d: each project's first slide opens with a navy band, so a new project is obvious at a glance */
+.project-opening{overflow:hidden}
+.project-opening::before{display:none}
+.project-opening .slide-top{position:relative;z-index:0;border-bottom:0;margin-bottom:16px;color:#fff}
+.project-opening .slide-top::before{content:"";position:absolute;z-index:-1;left:-80px;right:-80px;top:-60px;bottom:-10px;background:var(--deep)}
+.project-opening .project-identity{gap:14px;font-size:19px;font-weight:700;color:#fff;letter-spacing:-.01em}
+.project-opening .project-identity .project-number{width:auto;height:auto;padding:0 14px 0 0;background:none;border:0;border-right:1px solid rgba(255,255,255,.35);border-radius:0;color:#fff;font-size:30px;font-weight:750;line-height:1;letter-spacing:-.02em}
+.project-opening .project-identity .category{color:#b8cbdd;font-size:10.5px;letter-spacing:.12em;font-weight:600}
+.project-opening .stage-nav a{color:#c9d7e5;border-bottom-color:transparent}
+.project-opening .stage-nav a.current{color:#fff;font-weight:700;border-bottom:2px solid #fff;background:none}
+.project-opening .slide-top{margin-bottom:10px}
+.project-opening .project-identity{font-size:18px}
+.project-opening .project-identity .project-number{font-size:26px}
+.project-opening .slide-header{margin-top:12px;margin-bottom:12px}

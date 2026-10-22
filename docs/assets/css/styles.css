@@ -1024,3 +1024,10 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .results-layout .acquisition-figure img{height:250px;max-height:none;width:auto;max-width:100%;margin:0 auto;display:block}
 /* cover photo sits near the top of its panel with clear space below, never at the panel's edge */
 .cover .portrait{align-self:start;margin-top:8px}
+/* cover photo enlarged; its panel grows with it so the photo keeps clear space below */
+.cover .hero-grid{grid-template-columns:1fr 240px;gap:56px}
+.cover .portrait,.cover .portrait img{width:240px}.cover .portrait img{height:296px}
+.cover::after{width:316px;height:420px}
+/* project 01 tags fit on one line */
+#opencv .tags{gap:5px;flex-wrap:nowrap}#opencv .tags span{padding:3px 6px;white-space:nowrap;font-size:10.5px}
+@media screen and (max-width:700px){#opencv .tags{flex-wrap:wrap}}

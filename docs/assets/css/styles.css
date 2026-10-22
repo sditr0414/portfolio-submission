@@ -923,3 +923,7 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .s26-mini.one{grid-template-columns:1fr}.s26-mini.one>div{border-left:0;padding:8px 0 0}
 .s26-two.model .s26-table.data{margin-top:14px}
 @media screen and (max-width:700px){.s26-mini{grid-template-columns:1fr}.s26-mini>div{border-left:0;padding-left:0}}
+/* adopted option: badge next to its name and a navy bar on the row */
+.s26-table .pick{display:inline-block;margin-left:7px;padding:0 6px;border-radius:3px;background:var(--deep);color:#fff;font-size:10.5px;font-weight:700;line-height:1.6;vertical-align:1px}
+.s26-table tr.sel>th:first-child{box-shadow:inset 3px 0 0 var(--deep)}
+.s26-table.decide tbody th{box-shadow:inset 3px 0 0 var(--deep)}

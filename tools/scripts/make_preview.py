@@ -31,6 +31,10 @@ def build_preview(*, offline_fonts: bool=False, include_pdfs: bool=True) -> str:
                 if asset not in images:raise FileNotFoundError(asset)
                 el[attr]=images[asset]
         if el.name=='img':el['loading']='eager'
+        if el.name=='image' and el.get('href','').startswith('assets/images/'):  # photos inside inline SVG
+            asset=urlsplit(el['href']).path
+            if asset not in images:raise FileNotFoundError(asset)
+            el['href']=images[asset]
         href=urlsplit(el.get('href','')).path
         if include_pdfs and href in ('assets/pdf/slides.pdf','assets/pdf/handout.pdf'):
             el['href']=data_uri(ROOT/href)

@@ -5,16 +5,16 @@
 
 **[제출용 사이트 보기](https://sditr0414.github.io/portfolio-submission/)** · [상세 포트폴리오](https://sditr0414.github.io/)
 
-- [슬라이드형 PDF 다운로드](https://sditr0414.github.io/portfolio-submission/assets/pdf/slides.pdf) — 16:9, 16쪽
-- [A4 인쇄형 PDF 다운로드](https://sditr0414.github.io/portfolio-submission/assets/pdf/handout.pdf) — 한 면에 슬라이드 2장, 8쪽
+- [슬라이드형 PDF 다운로드](https://sditr0414.github.io/portfolio-submission/assets/pdf/slides.pdf) — 16:9, 20쪽
+- [A4 인쇄형 PDF 다운로드](https://sditr0414.github.io/portfolio-submission/assets/pdf/handout.pdf) — 한 면에 슬라이드 2장, 10쪽
 
 ## 프로젝트
 
-소개·학력과 6개 프로젝트를 16장으로 정리한 제출용입니다. 정지 이미지와 핵심 설명을 중심으로 담당 범위와 구현 결과를 확인할 수 있습니다. 영상과 자세한 과정은 [상세 포트폴리오](https://sditr0414.github.io/)에서 볼 수 있습니다.
+소개·학력과 6개 프로젝트를 20장으로 정리한 제출용입니다. 정지 이미지와 핵심 설명을 중심으로 담당 범위와 구현 결과를 확인할 수 있습니다. 영상과 자세한 과정은 [상세 포트폴리오](https://sditr0414.github.io/)에서 볼 수 있습니다.
 
 | 프로젝트 | 담당 역할 | 사용 기술 |
 | --- | --- | --- |
-| [OpenCV 기반<br>로봇팔 티칭](https://sditr0414.github.io/portfolio-submission/#opencv) | 로봇팔 2대의 카메라 보정·티칭 GUI·Raspberry Pi 연동, MuJoCo 자세·경로 미리보기 | Python, OpenCV, FK·IK, ROS2, MuJoCo, SO-101, Raspberry Pi |
+| [비전 기반<br>로봇팔 티칭·검사](https://sditr0414.github.io/portfolio-submission/#opencv) | 로봇팔 2대의 비전 보정·티칭 GUI·Raspberry Pi 연동, 학습 데이터·모델 비교와 실행 기준 검증 | Python, OpenCV, YOLO, CAD 정합, FK·IK, ROS2, MuJoCo, Isaac Sim, SO-101, Raspberry Pi5 |
 | [원격 물품<br>회수·운반 로봇](https://sditr0414.github.io/portfolio-submission/#robot) | 로봇팔 제작·제어, STM32 펌웨어 구축·통합, 통신 패킷 규격과 앱 연동 | C, C++, STM32, FreeRTOS, Bluetooth |
 | [AI 기반<br>보행 보조 장치](https://sditr0414.github.io/portfolio-submission/#vision) | 데이터 라벨 통합, 모델 학습·변환, ROI와 알림 판단 로직 구성 | Python, OpenCV, YOLO, TFLite |
 | [PLC 기반<br>창고 적재 제어](https://sditr0414.github.io/portfolio-submission/#plc) | 병렬 처리 로직과 HMI 작성, 메모리 상태에 따른 오동작 수정 | Mitsubishi Q PLC, GX Works2, GT Designer3 |

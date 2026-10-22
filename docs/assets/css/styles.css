@@ -962,23 +962,7 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .process-list dd strong{color:var(--deep)}
 @media screen and (max-width:700px){.workflow section:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-20px;transform:translateX(-50%)}.workflow{gap:22px}}
 
-/* Revision 2026-10-22 c · cover in the detailed portfolio's navy, fuller cover copy, model decisions as cards, fuller lower halves */
-.cover{background:linear-gradient(150deg,#2c4964 0%,#14293d 100%)}
-.cover::after{background:rgba(255,255,255,.05);width:300px;height:390px}
-.cover .slide-top,.cover .slide-footer,.cover .skills-band,.cover .skill-grid section{border-color:rgba(255,255,255,.18)}
-.cover .slide-body{padding-top:20px}
-.hero-grid{grid-template-columns:1fr 210px;gap:60px;align-items:start}
-.cover .intro-label{font-size:14px;color:#c7d6e4;margin-bottom:10px;letter-spacing:.01em}
-.hero-copy h1{font-size:54px;gap:18px}.cover .name-english{font-size:13px;letter-spacing:.16em;color:#bcd0e2}
-.hero-line{font-size:25px;line-height:1.5;margin:14px 0 12px;font-weight:600}
-.contact-links{margin-top:6px;font-size:14px}
-.cover-projects{list-style:none;margin:18px 0 0;padding:14px 0 0;border-top:1px solid rgba(255,255,255,.18);display:grid;grid-template-columns:1fr 1fr;gap:7px 28px;max-width:600px}
-.cover-projects a{display:flex;align-items:baseline;gap:9px;color:#e8f0f7;text-decoration:none;font-size:14.5px;line-height:1.5}
-.cover-projects a:hover{color:#fff;text-decoration:underline}
-.cover-projects b{font-size:11.5px;color:#9fb9d1;font-variant-numeric:tabular-nums;font-weight:700}
-.cover .portrait img{width:210px;height:258px}
-.cover .portrait{width:210px}
-.cover .skills-band{padding-top:14px}
+/* Revision 2026-10-22 c · cover spacing, uniform box tops, fuller lower halves */
 /* step-flow boxes share the navy top rule with the other cards on the slide; only the number badge carries the light-to-dark ramp */
 .workflow section{border-top-color:var(--deep)}
 /* model slide: three adopted decisions as cards */
@@ -1010,3 +994,31 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .results-layout .result-table tbody th,.results-layout .result-table td{padding-top:12px;padding-bottom:12px}
 .results-layout .s26-take{margin-top:12px;font-size:13.5px;padding:8px 14px}
 .results-layout .acquisition-figure img{max-height:230px;object-fit:contain}
+/* cover: keep the original colours; fill the copy column by size and vertical balance, nothing added */
+.cover .slide-body{display:flex;flex-direction:column}
+.cover .hero-grid{flex:1;align-items:center;grid-template-columns:1fr 210px;gap:60px}
+.cover .intro-label{font-size:14.5px;margin-bottom:12px}
+.cover .hero-copy h1{font-size:58px;gap:18px}.cover .name-english{font-size:13px;letter-spacing:.16em}
+.cover .hero-line{font-size:28px;line-height:1.5;margin:16px 0 16px;font-weight:600}
+.cover .contact-links{font-size:15px;margin-top:0}
+.cover .portrait,.cover .portrait img{width:210px}.cover .portrait img{height:258px}
+.cover .skills-band{margin-top:18px}
+/* every workflow box keeps its full border, including the last one */
+.workflow section,.workflow section:last-child,.workflow section+section{border:1px solid var(--blue-line);border-top:3px solid var(--deep)}
+/* page 20: larger flow and case cards so the slide is filled */
+#travel-detail .workflow{gap:26px}
+#travel-detail .workflow section{padding:20px 18px 22px}
+#travel-detail .workflow h3{font-size:19px;margin:9px 0 6px}#travel-detail .workflow p{font-size:15px;line-height:1.6}
+#travel-detail .travel-cases{margin-top:26px;gap:20px}
+#travel-detail .case-grid section{padding:20px 20px 22px}
+#travel-detail .case-grid h3{font-size:18px;margin-bottom:9px}#travel-detail .case-grid p{font-size:15.5px;line-height:1.65}
+/* page 18: larger signal figure and result rows */
+.results-layout .acquisition-figure img{max-height:280px}
+.results-layout .result-table tbody th,.results-layout .result-table td{padding-top:22px;padding-bottom:22px}
+/* page 9: larger log rows and image */
+.s26-log .s26-table.log td{padding-top:14px;padding-bottom:14px;font-size:15px}
+.s26-log .s26-take{margin-top:14px;padding:12px 16px}
+.s26-log .s26-table.log td{padding-top:12px;padding-bottom:12px}
+#travel-detail .slide-body,#thesis-results .slide-body{justify-content:center}
+#travel-detail .workflow section{padding:24px 18px 26px}#travel-detail .case-grid section{padding:24px 20px 26px}
+.results-layout .acquisition-figure img{height:250px;max-height:none;width:auto;max-width:100%;margin:0 auto;display:block}

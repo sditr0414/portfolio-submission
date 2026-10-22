@@ -927,3 +927,37 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .s26-table .pick{display:inline-block;margin-left:7px;padding:0 6px;border-radius:3px;background:var(--deep);color:#fff;font-size:10.5px;font-weight:700;line-height:1.6;vertical-align:1px}
 .s26-table tr.sel>th:first-child{box-shadow:inset 3px 0 0 var(--deep)}
 .s26-table.decide tbody th{box-shadow:inset 3px 0 0 var(--deep)}
+
+/* Revision 2026-10-22 b · visibility and emphasis carried over from the detailed portfolio */
+/* role block: a tinted box with a navy bar, so the personal scope stands out */
+.role-block{margin:16px 0 12px;padding:11px 16px 12px;background:var(--blue-tint);border:1px solid var(--blue-line);border-left:4px solid var(--deep);border-radius:0 4px 4px 0}
+.role-block h3{font-size:12.5px;color:var(--deep);font-weight:700;margin-bottom:4px}
+.role-block p{font-size:15px;line-height:1.6;color:var(--ink)}
+/* explanation stacks: tinted cards with a navy left bar */
+.text-stack{gap:10px}
+.text-stack>section{padding:11px 16px 12px 18px;background:var(--blue-tint);border:1px solid var(--blue-line);border-left:4px solid var(--deep);border-radius:0 4px 4px 0}
+.text-stack>section:last-child{padding-bottom:12px;border:1px solid var(--blue-line);border-left:4px solid var(--deep)}
+.text-stack>section::before{display:none}
+.text-stack h3{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.text-stack p{font-size:14.5px;line-height:1.6;color:#394b5d}
+/* case cards: tinted, navy top rule */
+.case-grid{gap:16px}
+.case-grid section{padding:12px 16px 14px;background:var(--blue-tint);border:1px solid var(--blue-line);border-top:3px solid var(--deep);border-radius:0 0 4px 4px}
+.case-grid h3{font-size:16px;font-weight:700;margin:0 0 6px;color:var(--ink)}
+.case-grid p{font-size:14.5px;line-height:1.6;color:#394b5d}
+/* workflow: numbers deepen from light to dark, like every other step flow */
+.workflow{background:none;border:0;gap:22px}
+.workflow section{padding:12px 16px 14px;background:var(--blue-tint);border:1px solid var(--blue-line);border-top:3px solid var(--step);border-radius:0 0 4px 4px;text-align:center}
+.workflow section:not(:last-child)::after{content:"›";right:-17px;top:50%;transform:translateY(-50%);background:none;color:var(--deep);font-size:20px}
+.workflow span{display:inline-block;padding:0 7px;border-radius:3px;background:var(--step);color:#fff;font-size:11px;font-weight:700;letter-spacing:0}
+.workflow h3{font-size:16px;color:var(--ink);font-weight:700;margin:6px 0 3px}
+.workflow p{font-size:13.5px;color:#394b5d}
+.workflow section:nth-child(1){--step:#6f97c0}.workflow section:nth-child(2){--step:#426d9a}.workflow section:nth-child(3){--step:#1f4670}
+.travel-cases{margin-top:18px}
+/* key numbers and terms inside sentences */
+.slide-body strong.key,.slide-body b.key{color:var(--deep);font-weight:700}
+.roi-walk{color:#c4553e;font-weight:700}.roi-car{color:#d07f1f;font-weight:700}
+/* issue/process tables: the outcome cell reads first */
+.issue-table td strong{color:var(--deep)}
+.process-list dd strong{color:var(--deep)}
+@media screen and (max-width:700px){.workflow section:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-20px;transform:translateX(-50%)}.workflow{gap:22px}}

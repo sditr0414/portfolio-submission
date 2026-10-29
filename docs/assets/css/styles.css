@@ -1096,3 +1096,5 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .s26-mini dt{font-size:13.5px}.s26-mini dd{font-size:14px}
 .s26-note{font-size:13px}
 .s28-split figcaption{font-size:14px}.s28-legend{font-size:13px}.s28-split li small{font-size:14px}
+/* 그림 설명은 사진 가운데에 맞춤 (2026-10-30) */
+.slide figure>figcaption:has(.fig-no){text-align:center;justify-content:center}

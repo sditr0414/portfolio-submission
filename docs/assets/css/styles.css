@@ -1113,3 +1113,5 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
   .s29-rates{grid-template-columns:1fr 1fr}
   .s29-step span{font-size:12.5px;white-space:normal;text-align:center}
 }
+/* 가로로 든 휴대폰도 읽기 모드: 태그가 넘치지 않게 줄바꿈 (2026-10-30) */
+.deck-reading .tags{flex-wrap:wrap!important}

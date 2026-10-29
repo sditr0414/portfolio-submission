@@ -371,7 +371,7 @@
   const slides = [...window.Portfolio.slides];
   const footer = document.querySelector('.site-footer');
   // Large screens and phones held sideways show one whole slide per screen.
-  const desktop = matchMedia('(min-width:1000px) and (min-height:540px), (orientation:landscape) and (min-width:560px) and (max-height:539px)');
+  const desktop = matchMedia('(min-width:1000px) and (min-height:540px)'); // phones held sideways read like portrait phones (full-size text)
   const compact = matchMedia('(max-height:539px)');
   const frames = slides.map(slide => {
     const shell = slide.parentElement;

@@ -1046,3 +1046,7 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .project-opening .project-identity{font-size:18px}
 .project-opening .project-identity .project-number{font-size:26px}
 .project-opening .slide-header{margin-top:12px;margin-bottom:12px}
+
+/* Keep the evaluation scope readable within the existing pallet slide. */
+.s26-take.metric-definition{font-size:16px;line-height:1.65}
+.s26-table td small{font-size:.78em;white-space:nowrap}

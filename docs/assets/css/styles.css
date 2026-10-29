@@ -1050,3 +1050,83 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 /* Keep the evaluation scope readable within the existing pallet slide. */
 .s26-take.metric-definition{font-size:16px;line-height:1.65}
 .s26-table td small{font-size:.78em;white-space:nowrap}
+/* 01 · 지그·팔레트 통합 쪽 */
+.s27-grid{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:30px;align-items:start}
+.s27-rows{display:grid;gap:14px}
+.s27-row{display:grid;grid-template-columns:118px minmax(0,1fr);gap:14px;align-items:start}
+.s27-row+.s27-row{padding-top:14px;border-top:1px solid var(--blue-line)}
+.s27-label h3{font-size:16px;font-weight:700;color:var(--deep);margin:2px 0 6px}
+.s27-label p{font-size:13px;line-height:1.55;color:#394b5d}
+.s27-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:34px}
+.s27-step{position:relative;margin:0;display:grid;justify-items:center;align-content:start}
+.s27-step svg{display:block;height:140px;width:auto;max-width:100%;border-radius:4px}
+.s27-row.jig .s27-step svg{aspect-ratio:420/450}.s27-row.pallet .s27-step svg{aspect-ratio:195/200}
+.s27-step figcaption{margin-top:6px;font-size:13px;font-weight:700;line-height:1.4;color:var(--ink);text-align:center}
+.s27-step+.s27-step::before{content:"";position:absolute;left:-17px;top:70px;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:var(--deep);box-shadow:0 2px 5px rgba(10,22,34,.18)}
+.s27-step+.s27-step::after{content:"";position:absolute;left:-17px;top:70px;width:6px;height:6px;margin:-3px 0 0 -5px;border-right:2px solid #fff;border-top:2px solid #fff;transform:rotate(45deg)}
+.s27-side{display:grid;gap:10px}
+.s27-card{padding:9px 16px 10px;background:var(--blue-tint);border:1px solid var(--blue-line);border-left:4px solid var(--deep);border-radius:0 4px 4px 0}
+.s27-card h3{font-size:14px;line-height:1.45;font-weight:700;color:var(--deep);margin-bottom:5px}
+.s27-card ol{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.s27-card ol li b{display:block;font-size:13.5px;line-height:1.45;color:var(--ink)}
+.s27-card ol li span{display:block;font-size:12.5px;line-height:1.4;color:#394b5d}
+.s27-bars{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.s27-bars li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;grid-template-areas:"name val cnt" "bar bar bar";column-gap:5px;row-gap:3px;align-items:baseline}
+.s27-name{grid-area:name;font-size:12.5px;color:#394b5d;white-space:nowrap}
+.s27-bars li b{grid-area:val;font-size:13.5px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
+.s27-bars li small{grid-area:cnt;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.s27-bar{grid-area:bar;display:block;height:8px;background:#d6e2ec;border-radius:2px;overflow:hidden}
+.s27-bar i{display:block;height:100%;background:#9fb4c8}
+.s27-bars li.sel .s27-name{font-weight:700;color:var(--ink)}.s27-bars li.sel .s27-bar i{background:var(--deep)}
+.s27-bars .pick{display:inline-block;margin-left:6px;padding:0 6px;border-radius:3px;background:var(--deep);color:#fff;font-size:10.5px;font-weight:700;line-height:1.6;vertical-align:1px}
+.s27-take{margin-top:7px;padding-top:6px;border-top:1px solid var(--blue-line);font-size:13px;line-height:1.45;color:var(--ink)}
+.s27-take b{color:var(--deep)}
+/* 01 · 데이터 분할 막대그래프 */
+.s28-split{margin:12px 0 0;padding-top:2px}
+.s28-split figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px;font-weight:700;color:var(--hl);padding-bottom:8px;border-bottom:2px solid var(--deep)}
+.s28-legend{display:flex;gap:12px;font-size:11.5px;font-weight:500;color:var(--muted)}
+.s28-legend span{display:inline-flex;align-items:center;gap:5px}
+.s28-legend i,.s28-track i{display:inline-block}
+.s28-legend i{width:10px;height:10px;border-radius:2px}
+.s28-split ul{list-style:none;margin:0;padding:8px 0 0;display:grid;gap:8px}
+.s28-split li{display:grid;grid-template-columns:86px minmax(0,1fr) 112px;gap:10px;align-items:center}
+.s28-split li b{font-size:14px;color:var(--ink);white-space:nowrap}
+.s28-split li small{font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.s28-track{display:flex;height:22px}
+.s28-track i{height:100%}
+.s28-track i.t{background:var(--hl)}.s28-track i.v{background:#7fc4c9}.s28-track i.s{background:#c9d6da}
+.s28-legend i.t{background:var(--hl)}.s28-legend i.v{background:#7fc4c9}.s28-legend i.s{background:#c9d6da}
+@media screen and (max-width:700px){.s28-split li{grid-template-columns:76px minmax(0,1fr);row-gap:3px}.s28-split li small{grid-column:2}}
+/* 색 강조 2026-10-30 · 발표 자료와 같은 남색 + 청록 강조, 실패는 빨강 */
+:root{--hl:#078b92;--hl-tint:#e8f4f4;--hl-line:#bfdfe1;--warn:#c0392b;--warn-tint:#fbefed}
+.pick,.s26-table .pick,.s26-decisions .pick,.s27-bars .pick{background:var(--hl)}
+.s26-table caption,.s26-dhead,.s26-mini dt,.s27-label h3,.s27-card h3,.s26-log h3{color:var(--hl)}
+.s26-table tr.sel th,.s26-table tr.sel td{background:var(--hl-tint)}
+.s26-table tr.sel td{color:var(--hl)}
+.s26-table tbody tr.sel th{box-shadow:inset 3px 0 0 var(--hl)}
+.s26-decisions section,.s26-take,.s27-card{border-left-color:var(--hl)}
+.s26-decisions .big b,.s26-take b,.s27-take b{color:var(--hl)}
+.s27-bars li.sel .s27-bar i{background:var(--hl)}.s27-bars li.sel b{color:var(--hl)}
+.s27-bar i{background:#9fb4bb}.s27-bar{background:#e2eaed}
+.s26-step+.s26-step::before,.s27-step+.s27-step::before,.s26-link i{background:var(--hl)}
+.s26-flow.c4 li:nth-child(1){--step:#7fc4c9}.s26-flow.c4 li:nth-child(2){--step:#3fa8ae}.s26-flow.c4 li:nth-child(3){--step:#078b92}.s26-flow.c4 li:nth-child(4){--step:#07274d}
+.s26-flow.c3 li:nth-child(1){--step:#5fb6bb}.s26-flow.c3 li:nth-child(2){--step:#078b92}.s26-flow.c3 li:nth-child(3){--step:#07274d}
+.s26-adopt li:nth-child(1) b{color:#3fa8ae}.s26-adopt li:nth-child(2) b{color:#078b92}.s26-adopt li:nth-child(3) b{color:#07274d}
+.s26-table.log tr.sel td{background:var(--warn-tint);color:var(--warn)}
+.s26-log .s26-take{background:var(--warn-tint);border-color:#f0d3cf;border-left-color:var(--warn)}
+.s26-log .s26-take b{color:var(--warn)}
+.stage-nav a.current{color:var(--hl);border-color:var(--hl)}
+.role-block,.text-stack>section,.text-stack>section:last-child{border-left-color:var(--hl)}
+.role-block h3{color:var(--hl)}
+.text-stack p b,.text-stack p strong,.issue-table td strong{color:var(--hl)}
+.specs dt{color:var(--hl)}
+.tags span{background:var(--hl-tint);border-color:var(--hl-line);color:#0a6f75}
+.result-table tr.highlight td{color:var(--hl);font-weight:700}
+@media screen and (max-width:900px){.s27-grid{grid-template-columns:1fr}}
+@media screen and (max-width:700px){
+  .s27-row{grid-template-columns:1fr;gap:8px}
+  .s27-strip{gap:24px}
+  .s27-step svg{height:auto;width:100%}
+  .s27-step+.s27-step::before,.s27-step+.s27-step::after{left:-12px;top:45%}
+  .s27-step figcaption{font-size:12px}
+}

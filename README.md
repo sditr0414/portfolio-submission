@@ -10,7 +10,7 @@
 
 | 형식 | 내용 |
 | --- | --- |
-| [슬라이드 PDF](https://sditr0414.github.io/portfolio-submission/assets/pdf/slides.pdf) | 16:9 · 20쪽 |
+| [슬라이드 PDF](https://sditr0414.github.io/portfolio-submission/assets/pdf/slides.pdf) | 16:9 · 19쪽 |
 | [A4 인쇄용 PDF](https://sditr0414.github.io/portfolio-submission/assets/pdf/handout.pdf) | 한 면 2장 · 10쪽 |
 
 ## 구성

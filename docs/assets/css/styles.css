@@ -983,12 +983,12 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .workflow section{padding:14px 16px 16px}
 .case-grid section{padding:14px 16px 16px}
 @media screen and (max-width:700px){.cover-projects{grid-template-columns:1fr}.hero-copy h1{font-size:38px}.hero-line{font-size:21px}}
-.s26-two.model .s26-table.data{margin-top:12px}
+.s26-two.model .s26-table.data{margin-top:8px}
 .s26-two.model .s26-pair img{aspect-ratio:16/9}
 .s26-decisions{gap:12px}.s26-decisions section{padding:12px 16px 13px}
 .s26-log{grid-template-columns:1fr 64px 1.1fr}
 .s26-log .s26-table.log td{padding-top:12px;padding-bottom:12px}
-.s26-two.model .s26-table.data th,.s26-two.model .s26-table.data td{padding-top:5px;padding-bottom:5px}
+.s26-two.model .s26-table.data th,.s26-two.model .s26-table.data td{padding-top:4px;padding-bottom:4px}
 .s26-two.model .s26-mini.one{margin-top:6px}.s26-two.model .s26-mini.one>div{padding-top:5px}
 .s26-two.model .s26-table caption{padding-bottom:4px}
 .results-layout .result-table tbody th,.results-layout .result-table td{padding-top:12px;padding-bottom:12px}

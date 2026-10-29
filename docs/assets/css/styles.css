@@ -1050,41 +1050,6 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 /* Keep the evaluation scope readable within the existing pallet slide. */
 .s26-take.metric-definition{font-size:16px;line-height:1.65}
 .s26-table td small{font-size:.78em;white-space:nowrap}
-/* 01 · 지그·팔레트 통합 쪽 (2×2: 각 줄과 오른쪽 상자의 위·아래를 맞춤) */
-.s27-grid{display:grid;grid-template-columns:minmax(0,1fr) 380px;column-gap:28px;row-gap:14px;align-items:stretch}
-.s27-row{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:start}
-.s27-label h3{font-size:15px;font-weight:700;color:var(--deep);margin:0 0 6px;line-height:1.4}
-.s27-label p{font-size:13px;line-height:1.55;color:#394b5d}
-.s27-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:30px}
-.s27-step{position:relative;margin:0;display:grid;justify-items:center;align-content:start}
-.s27-step svg{display:block;height:134px;width:auto;max-width:100%;border-radius:4px}
-.s27-row.jig .s27-step svg{aspect-ratio:420/450}.s27-row.pallet .s27-step svg{aspect-ratio:195/200}
-.s27-step figcaption{margin-top:6px;font-size:13px;font-weight:700;line-height:1.4;color:var(--ink);text-align:center}
-.s27-step+.s27-step::before{content:"";position:absolute;left:-15px;top:67px;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;background:var(--deep);box-shadow:0 2px 5px rgba(10,22,34,.18)}
-.s27-step+.s27-step::after{content:"";position:absolute;left:-15px;top:67px;width:6px;height:6px;margin:-3px 0 0 -5px;border-right:2px solid #fff;border-top:2px solid #fff;transform:rotate(45deg)}
-.s27-card{display:flex;flex-direction:column;padding:10px 16px 11px;background:var(--blue-tint);border:1px solid var(--blue-line);border-left:4px solid var(--deep);border-radius:0 4px 4px 0}
-.s27-card h3{font-size:13px;line-height:1.45;font-weight:700;color:var(--deep);margin-bottom:6px}
-.s27-card ol{list-style:none;margin:0;padding:0;display:grid;gap:6px}
-.s27-card ol li{display:grid;grid-template-columns:62px minmax(0,1fr);column-gap:10px;align-items:baseline}
-.s27-card ol li b{font-size:13px;line-height:1.5;color:var(--ink);white-space:nowrap}
-.s27-card ol li span{font-size:13px;line-height:1.5;color:#394b5d}
-.s27-bars{list-style:none;margin:0;padding:0;display:grid;gap:7px}
-.s27-bars li{display:grid;grid-template-columns:190px minmax(0,1fr) 46px;grid-template-areas:"name bar val";column-gap:8px;align-items:center}
-.s27-name{grid-area:name;font-size:13px;color:#394b5d;white-space:nowrap}
-.s27-bars li b{grid-area:val;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
-.s27-bar{grid-area:bar;display:block;height:8px;background:#dbe5ef;border-radius:2px;overflow:hidden}
-.s27-bar i{display:block;height:100%;background:#9fb6cc}
-.s27-bars li.sel .s27-name,.s27-bars li.sel b{font-weight:700;color:var(--deep)}.s27-bars li.sel .s27-bar i{background:var(--accent)}
-.s27-bars .pick{display:inline-block;margin-left:6px;padding:0 6px;border-radius:3px;background:var(--deep);color:#fff;font-size:11px;font-weight:700;line-height:1.6;vertical-align:1px}
-.s27-take{margin-top:10px;padding-top:7px;border-top:1px solid var(--blue-line);font-size:13px;line-height:1.5;color:var(--ink)}
-.s27-take b{color:var(--deep)}
-@media screen and (max-width:900px){.s27-grid{grid-template-columns:1fr}}
-@media screen and (max-width:700px){
-  .s27-row{grid-template-columns:1fr;gap:8px}
-  .s27-strip{gap:24px}
-  .s27-step svg{height:auto;width:100%}
-  .s27-step+.s27-step::before,.s27-step+.s27-step::after{left:-12px;top:45%}
-}
 /* 01 · 데이터 분할 누적 막대 */
 .s28-split{margin:12px 0 0}
 .s28-split figcaption{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:13px;font-weight:700;color:var(--deep);padding-bottom:7px;border-bottom:2px solid var(--deep)}
@@ -1092,16 +1057,42 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .s28-legend span{display:inline-flex;align-items:center;gap:5px}
 .s28-legend i{display:inline-block;width:10px;height:10px;border-radius:2px}
 .s28-split ul{list-style:none;margin:0;padding:9px 0 0;display:grid;gap:8px}
-.s28-split li{display:grid;grid-template-columns:84px minmax(0,1fr) 104px;gap:12px;align-items:center}
+.s28-split li{display:grid;grid-template-columns:84px minmax(0,1fr);gap:12px;align-items:center}
 .s28-split li b{font-size:14px;color:var(--ink);white-space:nowrap}
-.s28-split li small{font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
-.s28-track{display:flex;height:18px;background:var(--blue-tint);border-radius:2px;overflow:hidden}
-.s28-track i{display:block;height:100%}
-.s28-track i.t,.s28-legend i.t{background:var(--accent)}.s28-track i.v,.s28-legend i.v{background:#8fb0cf}.s28-track i.s,.s28-legend i.s{background:#c3d3e3}
-@media screen and (max-width:700px){.s28-split li{grid-template-columns:76px minmax(0,1fr);row-gap:3px}.s28-split li small{grid-column:2;text-align:left}}
+.s28-split li small{margin-left:10px;font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+.s28-track{display:flex;align-items:center;height:18px}
+.s28-track i{display:block;height:100%;flex:none}
+.s28-track i.t,.s28-legend i.t{background:var(--accent)}.s28-track i.v,.s28-legend i.v{background:#8fb0cf}.s28-track i.s,.s28-legend i.s{background:#b4c6d8}
+@media screen and (max-width:700px){.s28-split li{grid-template-columns:76px minmax(0,1fr)}}
 /* 강조 2026-10-30 · 기존 남색 계열 안에서 핵심 수치·소제목만 강조 */
 .s26-decisions .big b{color:var(--accent)}
 .s26-table tr.sel td{color:var(--deep)}
 .s26-table.log tr.sel td{color:#a5463c}
 .s26-log .s26-take{border-left-color:#a5463c}.s26-log .s26-take b{color:#a5463c}
 .result-table tr.highlight td{color:var(--accent);font-weight:700}
+/* 01 · 자세 보정·지그/팔레트: 다른 프로젝트와 같은 그림 + 설명 카드 배치 */
+.s29-split{display:grid!important;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:40px;align-items:start}
+.s29-board{background:#fff;border:1px solid var(--line);border-radius:2px;padding:12px 14px}
+.s29-pose{padding:22px 20px 18px}.s29-pose svg{display:block;width:100%;height:auto;max-height:300px}
+.s29-locate{display:grid;gap:10px;padding:10px 12px}
+.s29-row{display:block}
+.s29-row+.s29-row{padding-top:10px;border-top:1px solid var(--line)}
+.s29-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.s29-step{position:relative;display:grid;justify-items:center;gap:5px}
+.s29-step svg{display:block;height:100px;width:auto;max-width:100%;border-radius:2px}
+.s29-row.jig svg{aspect-ratio:420/450}.s29-row.pallet svg{aspect-ratio:195/200}
+.s29-step span{font-size:13px;color:#394b5d;white-space:nowrap}
+.s29-step+.s29-step::before{content:"›";position:absolute;left:-8px;top:48px;transform:translate(-50%,-50%);font-size:20px;line-height:1;color:#7d91a5}
+.s29-rates{margin-top:16px}
+.s29-rates small{font-size:13px;font-weight:500;color:var(--muted)}
+.s29-rates .sel dd{color:var(--accent)}
+@media screen and (max-width:700px){.s29-split{grid-template-columns:1fr!important}.s29-step svg{height:auto;width:100%}}
+/* 01 · 글자 크기를 다른 프로젝트(설명 14.5px, 소제목 16px)에 맞춤 */
+.s26-cards h3{font-size:16px}.s26-cards p{font-size:14.5px}
+.s26-table{font-size:15px}.s26-table caption{font-size:14px}.s26-table thead th{font-size:13.5px}
+.s26-take{font-size:15px}
+.s26-decisions h3{font-size:16px}.s26-decisions p{font-size:14px}
+.s26-dhead,.s26-log h3{font-size:14px}
+.s26-mini dt{font-size:13.5px}.s26-mini dd{font-size:14px}
+.s26-note{font-size:13px}
+.s28-split figcaption{font-size:14px}.s28-legend{font-size:13px}.s28-split li small{font-size:14px}

@@ -1098,3 +1098,18 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .s28-split figcaption{font-size:14px}.s28-legend{font-size:13px}.s28-split li small{font-size:14px}
 /* 그림 설명은 사진 가운데에 맞춤 (2026-10-30) */
 .slide figure>figcaption:has(.fig-no){text-align:center;justify-content:center}
+/* 모바일 가독성 (2026-10-30) */
+@media screen and (max-width:700px){
+  .s26-log{grid-template-columns:1fr}
+  .s26-log .s26-link{display:flex;align-items:center;justify-content:center;gap:8px}
+  .s26-log .s26-link i{margin:0;transform:rotate(90deg)}
+  .slide figcaption,.main-figure figcaption{font-size:13.5px;line-height:1.5}
+  .specs dt{font-size:13px}.specs dd{font-size:15px}
+  .tags span,.slide .tags span{font-size:12.5px!important}
+  .s28-split li{grid-template-columns:76px minmax(0,1fr)}
+  .s28-track{flex-wrap:wrap;height:auto;row-gap:4px}
+  .s28-track i{height:16px}
+  .s28-track small{flex-basis:100%;margin-left:0!important}
+  .s29-rates{grid-template-columns:1fr 1fr}
+  .s29-step span{font-size:12.5px;white-space:normal;text-align:center}
+}

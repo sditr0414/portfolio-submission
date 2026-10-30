@@ -389,10 +389,7 @@
     node.className = className; node.dataset.motionOnly = ''; parent.append(node); return node;
   };
   const progress = make('div', 'deck-progress', body);
-  progress.setAttribute('role', 'progressbar');
-  progress.setAttribute('aria-label', '포트폴리오 진행도');
-  progress.setAttribute('aria-valuemin', '1');
-  progress.setAttribute('aria-valuemax', String(slides.length));
+  progress.setAttribute('aria-hidden', 'true'); // visual only: each slide footer and the page counter already state the position
   make('span', 'deck-progress-fill', progress);
   document.querySelector('#pdf-button').setAttribute('aria-label', 'PDF 저장');
   const marker = make('span', 'motion-nav-marker', navList);

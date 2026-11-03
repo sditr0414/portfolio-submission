@@ -17,7 +17,7 @@
 
 | | 프로젝트 | 내용 |
 | :-: | --- | --- |
-| 01 | [비전 기반 로봇팔 티칭·검사](https://sditr0414.github.io/portfolio-submission/#opencv) | 지그 위치에 맞춘 로봇팔 동작 보정과 부품·안착 상태 검사 |
+| 01 | [비전 기반 로봇팔 조립·검사](https://sditr0414.github.io/portfolio-submission/#opencv) | 지그 위치에 맞춘 로봇팔 동작 보정과 부품·안착 상태 검사 |
 | 02 | [원격 물품 회수·운반 로봇](https://sditr0414.github.io/portfolio-submission/#robot) | 스마트폰으로 이동하며 물품을 집어 옮기는 4륜 로봇 |
 | 03 | [AI 기반 보행 보조 장치](https://sditr0414.github.io/portfolio-submission/#vision) | 사람·차량·장애물과 지면을 인식해 보행 위험을 안내하는 장치 |
 | 04 | [PLC 기반 창고 적재 제어](https://sditr0414.github.io/portfolio-submission/#plc) | 금속·비금속 소재 분류와 1–4층 창고 병렬 적재 공정 |

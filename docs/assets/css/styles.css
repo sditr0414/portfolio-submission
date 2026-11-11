@@ -1139,3 +1139,4 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .pose-photos img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--line);border-radius:2px}
 .pose-photos span{display:block;margin-top:5px;font-size:12.5px;font-weight:600;color:var(--deep);text-align:center}
 .pose-photos+.s29-pose{padding:6px 16px 4px}.pose-photos+.s29-pose svg{max-height:118px}
+.knock-wide{margin:0 0 14px}.knock-wide img{display:block;width:100%;height:auto;max-height:none}

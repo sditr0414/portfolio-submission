@@ -116,6 +116,16 @@ else:
     order = [re.sub(r'class="skill-index">\d\d<', f'class="skill-index">{i:02d}<', s) for i, s in enumerate(order, 1)]
     A['profile'] = A['profile'].replace(''.join(skills), ''.join(order))
     dropped = ['plc', 'robot', 'travel']
+    # real-time detection screen full width, accuracies in a strip below
+    A['thesis-results'] = A['thesis-results'].replace(body_of('thesis-results'),
+        '<div class="slide-body"><figure class="main-figure figure-board knock-wide"><img alt="실시간 노크 위치 탐지 화면: 센서 신호와 주파수 분석, 예측 구역, 아크릴판을 두드리는 손" '
+        'src="assets/images/knock-realtime.webp" width="1436" height="397"/>'
+        '<figcaption><b class="fig-no">그림 18. </b>실시간 탐지 화면 · 가운데 구역을 두드리자 시간·주파수 특징 모두 같은 구역으로 예측</figcaption></figure>'
+        '<dl class="specs"><div><dt>전처리</dt><dd>61Hz 하이패스 필터 · 평탄화 · 정규화</dd></div>'
+        '<div><dt>K-NN 정확도 · 센서 간 피크 시간 차</dt><dd>90.741%</dd></div>'
+        '<div><dt>K-NN 정확도 · 시간 영역 특징</dt><dd>96.296%</dd></div>'
+        '<div><dt>K-NN 정확도 · 주파수 영역 특징</dt><dd>97.884%</dd></div></dl></div>')
+    rep('thesis-results', '>입력 특징별 K-NN 검증 결과</h2>', '>실시간 탐지와 입력 특징별 K-NN 검증 결과</h2>')
 n = len(keep); out = []; fig = 0
 def renum(m):
     global fig

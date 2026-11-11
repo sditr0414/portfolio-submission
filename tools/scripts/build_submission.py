@@ -157,6 +157,8 @@ for k in keep:
         continue
     A[k], c = re.subn(r'(<div class="slide-body">\s*(?:<figure class="main-figure figure-board knock-wide">.*?</figure>)?<div class=")', r'\1sg ', A[k], count=1, flags=re.S)
     assert c == 1, k
+    if k in ('opencv-pose', 'robot-system', 'plc-detail', 'vision-detail', 'thesis-results'):
+        A[k] = A[k].replace('<div class="sg ', '<div class="sg fill ', 1)
 
 n = len(keep); out = []; fig = 0
 def renum(m):

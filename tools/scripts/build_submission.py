@@ -74,7 +74,7 @@ rep('opencv-pose', '<div class="s29-board s29-pose">',
     '</div><div class="s29-board s29-pose">')
 rep('opencv-pose', '</b>지그가 움직인 만큼 집게 작업점을 옮기고, 높이와 벌림은 유지</figcaption>',
     '</b>지그를 옮기고 돌려도 저장한 동작으로 부품을 올려놓는 시연(위)과 목표 보정 방식(아래)</figcaption>')
-ARM = ['opencv', 'opencv-pose', 'opencv-locate'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-inspect', 'opencv-model']
+ARM = ['opencv', 'opencv-pose', 'opencv-locate'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-model', 'opencv-inspect']
 for k in ARM + ['plc', 'plc-detail', 'vision', 'vision-detail', 'thesis', 'thesis-results']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)
 for n, k in enumerate(ARM, 1):

@@ -36,7 +36,7 @@ for _old, _st, _dt in [('<time>2026.04 – 2026.11 수료</time>', '수료', '20
     rep('resume', _old, f'<time><span class="edu-state">{_st}</span>{_dt}</time>')
 # submission copy: no contact line on the cover
 _c = re.search(r'<div class="contact-links">.*?</div>', A['profile'], flags=re.S).group(0)
-A['profile'] = A['profile'].replace(_c, '')
+A['profile'] = A['profile'].replace(_c, '<p class="site-line"><span>포트폴리오 사이트</span><a href="https://sditr0414.github.io/">sditr0414.github.io</a></p>')
 assert 'naver.com' not in A['profile']
 rep('profile', '<p class="intro-label">로봇 제어 · 비전 · 임베디드 신입</p>',
     '<p class="intro-label">로봇 제어 · 임베디드 신입</p>' if VARIANT == 'control' else '<p class="intro-label">로봇 비전 · 제어 신입</p>')
@@ -199,12 +199,10 @@ else:
     rep('thesis-results', '>입력 특징별 K-NN 검증 결과</h2>', '>신호 수집부터 입력 특징별 K-NN 검증까지</h2>')
     rep('thesis-results', '<p class="deck">같은 아크릴판에서 수집한 데이터를 학습 70%, 검증 30%로 무작위 분할해 비교했습니다</p>',
         '<p class="deck">같은 아크릴판에서 수집한 신호를 전처리하고, 입력 특징을 바꿔 가며 위치 분류 정확도를 비교했습니다</p>')
-# skills: robot·vision first in both decks
-skills = re.findall(r'<section><span aria-hidden="true" class="skill-index">\d\d</span>.*?</section>', A['profile'], flags=re.S)
-assert len(skills) == 3
-order = [skills[1], skills[0], skills[2]]
-order = [re.sub(r'class="skill-index">\d\d<', f'class="skill-index">{i:02d}<', s) for i, s in enumerate(order, 1)]
-A['profile'] = A['profile'].replace(''.join(skills), ''.join(order))
+# skills: control | robot·vision | tools; Ansys dropped
+_t = re.search(r'<h3>설계·개발 도구</h3><p>.*?</p>', A['profile'], flags=re.S).group(0)
+assert 'Ansys' in _t
+A['profile'] = A['profile'].replace(_t, '<h3>설계·개발 도구</h3><p>SolidWorks · MATLAB<br/>MuJoCo · Isaac Sim</p>')
 # --- one column grid on every project slide; figure on the left, text on the right
 rep('plc', '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고, 수동 모드에서는 개별 제어할 수 있게 했습니다</p>',
     '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고,<br/>수동 모드에서는 개별 제어할 수 있게 했습니다</p>')
@@ -228,9 +226,26 @@ set_summary('vision', [
     ('프로젝트 개요', '시각장애인의 보행을 돕는 웨어러블 장치를 만들었습니다<br/>카메라 영상에서 사람·차량·장애물을 탐지하고 인도와 차도를 구분했습니다'),
     ('적용 모델', '객체는 <strong>YOLO26n 객체 검출</strong> 모델로 위치를 찾고,<br/>지면은 <strong>YOLO26n-seg 인스턴스 분할</strong> 모델로 영역을 나눴습니다'),
     ('위험 알림', '보행 경로에 가까운 대상을 판단해 음성으로 알려 주게 했습니다')])
-_k2 = '<p>입력 특징을 <strong>센서 간 시간 차·시간 영역·주파수 영역</strong>으로 바꿔 가며<br/><strong>K-NN·SVM·ANN</strong> 모델의 위치 분류 정확도를 비교했습니다</p>'
+_k2 = '<p>입력 특징을 <strong>센서 간 시간 차·시간 영역·주파수 영역</strong>으로 바꿔 가며<br/><strong>K-NN·SVM·ANN</strong>을 학습하고, 특징별 정확도는 K-NN으로 비교했습니다</p>'
 if '<!--K2-->' in A['thesis']:
     A['thesis'] = A['thesis'].replace('<!--K2-->', _k2)
+def _specs(k, cells, role):
+    old = re.search(r'<dl class="specs">.*?</dl>', A[k], flags=re.S).group(0)
+    A[k] = A[k].replace(old, '<dl class="specs with-role">' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in cells)
+                        + f'<div class="role"><dt>담당 역할</dt><dd>{role}</dd></div></dl>')
+_specs('opencv', [('기간', '2026.09 – 2026.11'), ('장비', 'SO-101 2대 · Raspberry Pi5')],
+       '비전 보정 · 티칭 GUI · Raspberry Pi5 연동 · 학습 데이터·모델 비교')
+_specs('robot', [('수행 시기', '2026.07 · 1주'), ('구동 구성', '4WD · 서보 6개')],
+       '프로젝트 리더 · 로봇팔 제작·제어 · STM32 펌웨어 · 통신 규격 설계')
+_specs('plc', [('PLC', 'Mitsubishi Q 시리즈'), ('개발 도구', 'GX Works2 · GT Designer3')],
+       '병렬 처리 로직 · HMI 화면 작성 · 수동 제어 코드 통합')
+_specs('vision', [('수행 시기', '2026.05 · 11일'), ('라벨 통합', '객체 29→10종 · 지면 23→7종')],
+       '라벨 통합 · 모델 학습·변환 · ROI·알림 판단 로직 구현')
+_specs('thesis', [('논문 제출', '2023.05'), ('수집 데이터', '센서 8개 · 9구역 × 140회')],
+       '주제 제안 · MATLAB 전처리·특징 추출 · 모델 비교 · 실시간 탐지 구현')
+if 'thesis-results' in A:
+    for o, n in [('90.741<span>', '90.7<span>'), ('96.296<span>', '96.3<span>'), ('97.884<span>', '97.9<span>')]:
+        if o in A['thesis-results']: A['thesis-results'] = A['thesis-results'].replace(o, n)
 # technology tags removed from the overviews (the cards already name what was used)
 for k in ['opencv', 'robot', 'vision', 'plc', 'thesis']:
     A[k] = re.sub(r'<div class="tags">.*?</div>', '', A[k], flags=re.S)

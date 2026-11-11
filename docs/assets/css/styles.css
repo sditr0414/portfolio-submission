@@ -1212,7 +1212,7 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .slide.project-opening .sg .ov-stack section{padding-top:7px!important;padding-bottom:7px!important}
 .slide.project-opening .sg .ov-stack h3{font-size:15.5px!important;margin-bottom:1px!important}
 .slide.project-opening .sg .ov-stack p{font-size:14px!important;line-height:1.58!important}
-#thesis .knock-wide img{max-height:172px}
+#thesis .knock-wide img{max-height:158px}
 .slide.project-opening .sg .ov-stack section{flex:1 1 auto!important}
 .resume-entry time{display:flex;align-items:center;gap:0}
 .resume-entry time .edu-state{padding-right:9px;margin-right:9px;border-right:1px solid #b9c6d3;line-height:1.1}
@@ -1234,3 +1234,8 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 #robot-system .sg.fill .issue-table.three th,#robot-system .sg.fill .issue-table.three td{padding-top:13px;padding-bottom:13px;line-height:1.6}
 #robot-system .sg.fill .issue-table.three tbody th{width:118px}
 .gui-shots img{background:none}
+.specs.with-role{grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,2.3fr)}
+.specs.with-role .role dd{font-size:14.5px}
+.cover .site-line{margin:22px 0 0;font-size:14.5px;color:#c9d7e5;display:flex;gap:12px;align-items:center}
+.cover .site-line span{padding-right:12px;border-right:1px solid rgba(255,255,255,.35);font-size:13px}
+.cover .site-line a{color:#fff;text-decoration:none;font-weight:600;letter-spacing:.01em}

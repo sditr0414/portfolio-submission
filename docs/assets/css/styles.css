@@ -1128,3 +1128,9 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .cover .hero-line{font-size:25px;margin:14px 0 16px}
 .submission-two{align-items:start}
 .s26-two.model .s26-mini{margin-top:14px}
+.submission-two{gap:36px}
+.submission-two .text-stack{gap:16px}
+.submission-two .text-stack section{padding-top:16px;padding-bottom:16px}
+.submission-two .text-stack h3{font-size:18px;margin-bottom:6px}
+.submission-two .text-stack p{font-size:15.5px;line-height:1.75}
+.submission-two .issue-table th,.submission-two .issue-table td{font-size:15.5px;line-height:1.75;padding-top:15px;padding-bottom:15px}

@@ -29,6 +29,8 @@ rep('profile', '<p>Python · ROS2<br/>OpenCV · YOLO · TFLite</p>', '<p>Python 
 # --- robot arm (6 -> 3): overview / position / inspection + model
 rep('opencv', '<div><dt>진행 상태</dt><dd>프로젝트 진행 중</dd></div>', '<div><dt>인식 대상</dt><dd>부품·지그 13종</dd></div>')
 rep('opencv-locate', '>지그·팔레트 위치를 AI와 형상 검증으로 확정</h2>', '>AI 인식과 설계 형상 맞춤으로 지그·팔레트 위치 확정</h2>')
+rep('opencv-locate', '<p class="deck">AI가 찾은 영역을 OpenCV·CAD 형상에 다시 맞춰, 위치·방향이 맞을 때만 채택합니다</p>',
+    '<p class="deck">외곽선만으로는 가려진 팔레트를 놓쳐, AI가 찾은 영역을 설계 형상에 다시 맞추고 위치·방향이 맞을 때만 채택합니다</p>')
 cards = re.search(r'<div class="s26-cards">.*?</div>(?=<table)', A['opencv-inspect'], flags=re.S).group(0)
 table = re.search(r'<table class="s26-table">.*?</table>', A['opencv-inspect'], flags=re.S).group(0)
 take = re.search(r'<p class="s26-take">.*?</p>', A['opencv-inspect'], flags=re.S).group(0)
@@ -39,7 +41,7 @@ A['opencv-inspect'] = A['opencv-inspect'].replace(body_of('opencv-inspect'),
       '<div><dt>기록</dt><dd>판정 영상·오류 기록 저장</dd></div></dl></div><div>' + decisions + '</div></div></div>')
 rep('opencv-inspect', '>부품 종류와 제자리 안착을 따로 확인</h2>', '>부품 종류·안착 검사와 Raspberry Pi5 경량화</h2>')
 rep('opencv-inspect', '<p class="deck">티칭 GUI에서 기준 설정·스텝 편집과 측정·검사 결과를 함께 관리합니다</p>',
-    '<p class="deck">부품 종류와 안착 위치를 따로 검사하고, Raspberry Pi5에서 실행 형식과 모델 크기를 정했습니다</p>')
+    '<p class="deck">OpenCV만으로 생긴 구분 오류를 없애려고 종류와 안착 검사를 나누고, Raspberry Pi5에 맞춰 실행 형식과 모델 크기를 정했습니다</p>')
 for k in ['opencv', 'opencv-locate', 'opencv-inspect']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)
 for n, k in enumerate(['opencv', 'opencv-locate', 'opencv-inspect'], 1):
@@ -56,6 +58,9 @@ rep('robot-system', '<p class="deck">16바이트 통신 규격으로 서보 제�
 for k in ['robot', 'robot-system']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)
     A[k] = re.sub(r'(<span class="part-number">\d) / 3</span>', r'\1 / 2</span>', A[k])
+
+rep('vision-detail', '<p class="deck">입력 해상도와 모델 형식을 조정하고, 보행 경로와 차량 접근을 판단할 영역을 정했습니다</p>',
+    '<p class="deck">Raspberry Pi5 한 대에서 두 모델을 함께 돌리기 위해 입력과 모델을 줄이고, 판단 영역을 보행과 차량으로 나눴습니다</p>')
 
 keep = ['profile', 'resume', 'opencv', 'opencv-locate', 'opencv-inspect', 'robot', 'robot-system', 'vision', 'vision-detail']
 n = len(keep); out = []; fig = 0

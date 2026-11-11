@@ -81,6 +81,15 @@ for k in ['robot', 'robot-system']:
 rep('vision-detail', '<p class="deck">입력 해상도와 모델 형식을 조정하고, 보행 경로와 차량 접근을 판단할 영역을 정했습니다</p>',
     '<p class="deck">Raspberry Pi5 한 대에서 두 모델을 함께 돌리기 위해 입력과 모델을 줄이고, 판단 영역을 보행과 차량으로 나눴습니다</p>')
 
+# --- walking aid: clean ROI picture on the overview, Pi5 run screen on the detail slide
+rep('vision', '<img alt="Raspberry Pi5에서 실행한 객체·지면 인식 화면" class="video-poster" decoding="async" height="1068" loading="lazy" src="assets/images/vision-demo.webp" width="1611"/>',
+    '<img alt="보행 영역과 차량 영역을 나눠 표시한 인식 화면" class="video-poster" decoding="async" height="483" loading="lazy" src="assets/images/vision-roi.webp" width="719"/>')
+rep('vision', '</b>Raspberry Pi5에서 실행한 객체·지면 인식 화면</figcaption>', '</b>객체·지면 인식 화면 · 빨간색: 보행 경로, 주황색: 차량 접근 영역</figcaption>')
+rep('vision-detail', '<img alt="보행 영역과 차량 영역을 나눠 표시한 ROI" decoding="async" height="483" loading="lazy" src="assets/images/vision-roi.webp" width="719"/>',
+    '<img alt="Raspberry Pi5에서 실행한 객체·지면 인식 화면과 실행 기록" decoding="async" height="1068" loading="lazy" src="assets/images/vision-demo.webp" width="1611"/>')
+rep('vision-detail', 'data-caption="빨간색: 보행 경로 · 주황색: 차량 접근 영역" data-image="assets/images/vision-roi.webp"', 'data-caption="Raspberry Pi5에서 실행한 인식 화면과 실행 기록" data-image="assets/images/vision-demo.webp"')
+rep('vision-detail', '</b> 빨간색: 보행 경로 · 주황색: 차량 접근 영역</figcaption>', '</b>Raspberry Pi5에서 실행한 인식 화면과 실행 기록</figcaption>')
+
 # --- finished projects: past tense
 if VARIANT == 'control':
     rep('opencv', '<p class="deck">Raspberry Pi5에서 AI·OpenCV·CAD로 지그 위치와 부품 상태를 확인합니다</p>',
@@ -116,16 +125,28 @@ else:
     order = [re.sub(r'class="skill-index">\d\d<', f'class="skill-index">{i:02d}<', s) for i, s in enumerate(order, 1)]
     A['profile'] = A['profile'].replace(''.join(skills), ''.join(order))
     dropped = ['plc', 'robot', 'travel']
-    # real-time detection screen full width, accuracies in a strip below
-    A['thesis-results'] = A['thesis-results'].replace(body_of('thesis-results'),
+    # real-time detection screen on the overview; method and results on the second slide
+    summary = re.search(r'<p class="summary">.*?</p>', A['thesis'], flags=re.S).group(0)
+    role = re.search(r'<div class="role-block contribution">.*?</div>', A['thesis'], flags=re.S).group(0)
+    tags = re.search(r'<div class="tags">.*?</div>', A['thesis'], flags=re.S).group(0)
+    specs = re.search(r'<dl class="specs">.*?</dl>', A['thesis'], flags=re.S).group(0)
+    A['thesis'] = A['thesis'].replace(body_of('thesis'),
         '<div class="slide-body"><figure class="main-figure figure-board knock-wide"><img alt="실시간 노크 위치 탐지 화면: 센서 신호와 주파수 분석, 예측 구역, 아크릴판을 두드리는 손" '
         'src="assets/images/knock-realtime.webp" width="1436" height="397"/>'
-        '<figcaption><b class="fig-no">그림 18. </b>실시간 탐지 화면 · 가운데 구역을 두드리자 시간·주파수 특징 모두 같은 구역으로 예측</figcaption></figure>'
-        '<dl class="specs"><div><dt>전처리</dt><dd>61Hz 하이패스 필터 · 평탄화 · 정규화</dd></div>'
-        '<div><dt>K-NN 정확도 · 센서 간 피크 시간 차</dt><dd>90.741%</dd></div>'
-        '<div><dt>K-NN 정확도 · 시간 영역 특징</dt><dd>96.296%</dd></div>'
-        '<div><dt>K-NN 정확도 · 주파수 영역 특징</dt><dd>97.884%</dd></div></dl></div>')
-    rep('thesis-results', '>입력 특징별 K-NN 검증 결과</h2>', '>실시간 탐지와 입력 특징별 K-NN 검증 결과</h2>')
+        '<figcaption><b class="fig-no">그림 17. </b>실시간 탐지 화면 · 가운데 구역을 두드리자 시간·주파수 특징 모두 같은 구역으로 예측</figcaption></figure>'
+        '<div class="knock-intro"><div>' + summary + tags + '</div>' + role + '</div>' + specs + '</div>')
+    table = re.search(r'<table class="result-table">.*?</table>', A['thesis-results'], flags=re.S).group(0)
+    A['thesis-results'] = A['thesis-results'].replace(body_of('thesis-results'),
+        '<div class="slide-body"><div class="split submission-two knock-method"><div class="text-stack">'
+        '<section data-step="01"><h3>데이터 수집</h3><p>센서 8개로 9개 위치를 위치당 140회, 총 1,260회 기록<br/>2,500Hz로 0.4초, 트리거 이전 0.05초 포함</p></section>'
+        '<section data-step="02"><h3>전처리</h3><p>61Hz 하이패스 필터와 데이터 평탄화 후 정규화</p></section>'
+        '<section data-step="03"><h3>특징 선정</h3><p>다중 선형회귀로 중요도를 판단해<br/>시간 영역 4개, 주파수 영역 3개, 센서 간 시간 차 1개 선정</p></section>'
+        '<section data-step="04"><h3>모델 비교와 실시간 예측</h3><p>K-NN·SVM·ANN을 학습 70%, 검증 30%로 비교<br/>학습한 모델로 두드린 위치를 실시간 예측</p></section>'
+        '</div><div><h3>K-NN 검증 정확도</h3>' + table +
+        '<p class="s26-take">센서 간 시간 차만 쓴 방식보다 <b>시간·주파수 영역 특징의 정확도가 더 높음</b></p></div></div></div>')
+    rep('thesis-results', '>입력 특징별 K-NN 검증 결과</h2>', '>신호 수집부터 입력 특징별 K-NN 검증까지</h2>')
+    rep('thesis-results', '<p class="deck">같은 아크릴판에서 수집한 데이터를 학습 70%, 검증 30%로 무작위 분할해 비교했습니다</p>',
+        '<p class="deck">같은 아크릴판에서 수집한 신호를 전처리하고, 입력 특징을 바꿔 가며 위치 분류 정확도를 비교했습니다</p>')
 n = len(keep); out = []; fig = 0
 def renum(m):
     global fig

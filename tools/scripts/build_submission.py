@@ -64,16 +64,21 @@ if VARIANT == 'control':
     # control deck: operator screens instead of the inspection page
     A['opencv-inspect'] = re.sub(r'(<h2 id="opencv-inspect-title">).*?(</h2>)', r'\1티칭 GUI와 Windows 관제 화면\2', A['opencv-inspect'], flags=re.S)
     A['opencv-inspect'] = re.sub(r'<p class="deck">.*?</p>', '<p class="deck">동작을 가르치는 화면과 작업을 요청하는 화면을 만들고, 통신이 끊기면 팔이 멈추게 했습니다</p>', A['opencv-inspect'], count=1, flags=re.S)
+    _gui_img = re.search(r'<img[^>]*opencv-gui-poster[^>]*/>', guifig).group(0)
     A['opencv-inspect'] = A['opencv-inspect'].replace(body_of('opencv-inspect'),
-        '<div class="slide-body"><div class="split submission-two fill gui-page">' + guifig
-        + '<div class="text-stack">'
-          '<section><h3>티칭 GUI · Python Tkinter</h3><p>원점·TCP·카메라 좌표 기준 설정과 스텝 편집을 한 화면에서 처리<br/>'
-          '카메라가 찾은 지그와 <strong>부품 안착 검사 결과를 같은 화면에 표시</strong></p></section>'
-          '<section><h3>관제 화면 · Windows WPF</h3><p>조립·적재·정지·재개 명령을 Windows 화면에서 요청하고 처리 상태 확인<br/>'
-          'Ubuntu 중계 프로그램이 <strong>HTTPS/WSS와 ROS2 Action 클라이언트를 연결</strong></p></section>'
-          '<section><h3>통신 단절과 정지 처리</h3><p>PC와 Raspberry Pi5가 0.25초마다 생존 신호를 교환<br/>'
-          '<strong>3초 동안 응답이 없으면 작업 중인 팔을 멈추고 작업 보류</strong><br/>긴급정지는 다른 요청보다 먼저 전송</p></section>'
-          '</div></div></div>')
+        '<div class="slide-body"><div class="gui-page"><div class="gui-shots">'
+        '<figure class="figure-board">' + _gui_img + '<figcaption><b class="fig-no">그림 4. </b>티칭 GUI · 스텝 편집·카메라 측정·검사</figcaption></figure>'
+        '<figure class="figure-board"><img alt="Windows WPF 작업 관제 화면: 전체 명령, 연결·운전 상태, 최근 명령" decoding="async" loading="lazy" '
+        'src="assets/images/opencv-wpf-console.webp" width="1920" height="1008"/>'
+        '<figcaption><b class="fig-no">그림 5. </b>Windows 관제 화면 · 명령 요청과 연결·운전 상태</figcaption></figure></div>'
+        '<div class="text-stack gui-cards">'
+        '<section><h3>티칭 GUI · Python Tkinter</h3><p>기준 설정과 스텝 편집을 한 화면에서 처리<br/>'
+        '지그 측정과 <strong>안착 검사 결과를 함께 표시</strong></p></section>'
+        '<section><h3>관제 화면 · Windows WPF</h3><p>조립·적재·정지·재개 명령 요청과 결과 조회<br/>'
+        'Ubuntu 중계로 <strong>ROS2 Action 클라이언트와 연결</strong></p></section>'
+        '<section><h3>통신 단절과 정지 처리</h3><p>0.25초마다 생존 신호 교환<br/>'
+        '<strong>3초간 응답이 없으면 팔 정지·작업 보류</strong></p></section>'
+        '</div></div></div>')
 rep('opencv-model', '<p class="deck">지그·단품·부분 조립체·완제품 13개 클래스를 구분하고, Raspberry Pi5에서 실행 형식과 모델 크기를 정했습니다</p>',
     '<p class="deck">실물로 반복해 찍기 어려운 장면은 Isaac Sim 가상 작업대에서 만들어 학습하고, Raspberry Pi5에 맞춰 실행 형식과 모델 크기를 정했습니다</p>')
 rep('opencv-model', '<div><dt>가상 데이터</dt><dd>오안착 137장·경계 사례 45장 포함, 배치·적재·조명 변화</dd></div>',
@@ -104,16 +109,12 @@ for n, k in enumerate(ARM, 1):
 stack = re.search(r'<div class="text-stack">.*?</section></div>', A['robot-system'], flags=re.S).group(0)
 issues = re.search(r'<table class="issue-table">.*?</table>', A['robot-detail'], flags=re.S).group(0)
 def _row(th, why, fix):
-    return f'<tr><th scope="row">{th}</th><td><span class="why"><b>원인</b>{why}</span>{fix}</td></tr>'
-issues = ('<table class="issue-table"><thead><tr><th scope="col">문제</th><th scope="col">원인과 개선 내용</th></tr></thead><tbody>'
-    + _row('부하가 걸릴 때의 떨림', '긴 케이블과 커넥터 저항으로 서보 단자 전압이 순간적으로 낮아짐',
-           '전원 배선 점검, 전원부 커패시터 추가, 토크 여유가 있는 서보로 교체<br/><strong>물건을 들 때 손목·그리퍼의 떨림 감소</strong>')
-    + _row('관절의 급격한 움직임', '목표 각도를 한 번에 주면 펄스폭이 급격히 바뀌어 속도가 불연속',
-           '<strong>20ms마다 펄스폭을 단계적으로 바꾸는 S-curve</strong> 적용<br/>변화량을 작게 → 크게 → 작게 주어 출발과 정지를 완만하게 함')
-    + _row('관절 원점·가동 범위', '같은 자세라도 필요한 펄스값이 서보마다 다름',
-           '<strong>−90°·0°·+90° 3점 보정</strong>으로 원점·리미트 설정<br/>서보별 실측 펄스값을 저장해 관절 제어에 반영')
-    + _row('고속 주행 시 방향 보정', 'PWM이 최댓값 255에 닿아 PID 보정값이 모터 출력에 반영되지 않음',
-           '<strong>최대 출력을 220 PWM으로 제한</strong>해 좌우 보정 여유 확보')
+    return f'<tr><th scope="row">{th}</th><td class="why">{why}</td><td>{fix}</td></tr>'
+issues = ('<table class="issue-table three"><thead><tr><th scope="col">문제</th><th scope="col">원인</th><th scope="col">개선</th></tr></thead><tbody>'
+    + _row('부하가 걸릴 때의 떨림', '서보 단자 전압이 순간적으로 낮아짐', '전원 배선 점검, 커패시터 추가, 서보 교체로 <strong>떨림 감소</strong>')
+    + _row('관절의 급격한 움직임', '펄스폭이 한 번에 바뀌어 속도가 불연속', '<strong>20ms마다 펄스폭을 단계적으로 바꾸는 S-curve</strong> 적용')
+    + _row('관절 원점·가동 범위', '필요한 펄스값이 서보마다 다름', '<strong>−90°·0°·+90° 3점 보정</strong>으로 원점·리미트 설정')
+    + _row('고속 주행 시 방향 보정', 'PWM이 최댓값에 닿아 PID 보정이 반영되지 않음', '<strong>최대 출력을 220 PWM으로 제한</strong>')
     + '</tbody></table>')
 A['robot-system'] = A['robot-system'].replace(body_of('robot-system'),
     '<div class="slide-body"><div class="split submission-two">' + stack + '<div class="app-cases">' + issues + '</div></div></div>')

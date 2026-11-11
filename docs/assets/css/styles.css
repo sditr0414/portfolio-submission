@@ -1219,5 +1219,18 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 #opencv-locate .sg{align-items:stretch!important}
 #opencv-locate .sg>.text-stack{display:flex;flex-direction:column}
 #opencv-locate .sg>.text-stack section{flex:1 1 0;display:flex;flex-direction:column;justify-content:center}
-.gui-page .system-figure{align-self:center}
-.gui-page .system-figure img{width:100%;height:auto}
+.slide .gui-page{display:flex!important;flex-direction:column;gap:14px;flex:1 1 auto}
+.gui-shots{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.gui-shots figure{margin:0;text-align:center}
+.gui-shots img{display:block;width:100%;height:214px!important;object-fit:contain;background:#f3f6f9}
+.gui-shots figcaption{margin-top:6px}
+.slide .gui-cards{display:grid!important;grid-template-columns:repeat(3,1fr);gap:14px}
+.slide .gui-cards section{padding:10px 16px}
+.slide .gui-cards h3{font-size:16.5px;margin-bottom:4px}
+.slide .gui-cards p{font-size:14.5px;line-height:1.65}
+.slide .gui-page{width:100%;max-width:none}
+.slide .gui-page>.gui-shots,.slide .gui-page>.gui-cards{width:100%;max-width:none}
+.slide .sg.fill .issue-table.three td.why{display:table-cell;font-size:13.5px;color:#5b6b7c;width:31%;margin:0}
+#robot-system .sg.fill .issue-table.three th,#robot-system .sg.fill .issue-table.three td{padding-top:13px;padding-bottom:13px;line-height:1.6}
+#robot-system .sg.fill .issue-table.three tbody th{width:118px}
+.gui-shots img{background:none}

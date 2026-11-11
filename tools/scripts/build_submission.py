@@ -62,6 +62,17 @@ for k in ['robot', 'robot-system']:
 rep('vision-detail', '<p class="deck">입력 해상도와 모델 형식을 조정하고, 보행 경로와 차량 접근을 판단할 영역을 정했습니다</p>',
     '<p class="deck">Raspberry Pi5 한 대에서 두 모델을 함께 돌리기 위해 입력과 모델을 줄이고, 판단 영역을 보행과 차량으로 나눴습니다</p>')
 
+# --- finished projects: past tense
+rep('opencv', '지그 위치와 부품 상태를 확인합니다</p>', '지그 위치와 부품 상태를 확인했습니다</p>')
+rep('opencv', '저장한 동작으로 조립·하차 공정을 이어갑니다<br/>', '저장한 동작으로 조립·하차 공정을 이어가게 했습니다<br/>')
+rep('opencv', '부품 종류와 안착 상태를 검사합니다</p>', '부품 종류와 안착 상태를 검사했습니다</p>')
+rep('opencv-locate', '위치·방향이 맞을 때만 채택합니다</p>', '위치·방향이 맞을 때만 채택했습니다</p>')
+rep('robot', '주행과 물품 회수 동작을 제어합니다</p>', '주행과 물품 회수 동작을 제어했습니다</p>')
+rep('robot', '물품 회수·운반 시연품입니다<br/>', '물품 회수·운반 시연품을 만들었습니다<br/>')
+rep('robot', '저장한 동작을 재생합니다</p>', '저장한 동작을 재생하게 했습니다</p>')
+rep('vision', '인도와 차도를 구분합니다<br/>', '인도와 차도를 구분했습니다<br/>')
+rep('vision', '음성으로 알려 줍니다</p>', '음성으로 알려 주게 했습니다</p>')
+
 keep = ['profile', 'resume', 'opencv', 'opencv-locate', 'opencv-inspect', 'robot', 'robot-system', 'vision', 'vision-detail']
 n = len(keep); out = []; fig = 0
 def renum(m):

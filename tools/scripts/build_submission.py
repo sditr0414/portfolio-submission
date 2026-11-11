@@ -2,7 +2,7 @@
 """Reduce the 19-slide master (docs/index.html) to a 9-slide submission deck, in place.
 
   build_submission.py control   robot arm: overview / pose (ROS2, FK, IK) / position; then mobile robot, PLC
-  build_submission.py vision    robot arm: overview / position / inspection + model; then walking aid, mobile robot
+  build_submission.py vision    robot arm: overview / position / inspection + model; then walking aid, knock research
 
 Run on a copy of the master deck.
 """
@@ -61,7 +61,7 @@ rep('opencv-pose', '<div class="s29-board s29-pose">',
 rep('opencv-pose', '</b>지그가 움직인 만큼 집게 작업점을 옮기고, 높이와 벌림은 유지</figcaption>',
     '</b>지그를 옮기고 돌려도 저장한 동작으로 부품을 올려놓는 시연(위)과 목표 보정 방식(아래)</figcaption>')
 ARM = ['opencv', 'opencv-pose', 'opencv-locate'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-inspect']
-for k in ARM + ['plc', 'plc-detail', 'vision', 'vision-detail']:
+for k in ARM + ['plc', 'plc-detail', 'vision', 'vision-detail', 'thesis', 'thesis-results']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)
 for n, k in enumerate(ARM, 1):
     A[k] = re.sub(r'<span class="part-number">\d / 6</span>', f'<span class="part-number">{n} / 3</span>', A[k])
@@ -105,15 +105,17 @@ if VARIANT == 'control':
     renumber('plc', '04', '03'); renumber('plc-detail', '04', '03')
     dropped = ['vision', 'thesis', 'travel']
 else:
-    keep = ['profile', 'resume'] + ARM + ['vision', 'vision-detail', 'robot', 'robot-system']
-    for k, old, new in [('vision', '03', '02'), ('vision-detail', '03', '02'), ('robot', '02', '03'), ('robot-system', '02', '03')]:
+    keep = ['profile', 'resume'] + ARM + ['vision', 'vision-detail', 'thesis', 'thesis-results']
+    for k, old, new in [('vision', '03', '02'), ('vision-detail', '03', '02'), ('thesis', '05', '03'), ('thesis-results', '05', '03')]:
         renumber(k, old, new)
+    rep('thesis', '8개의 피에조 센서로 수집합니다<br/>', '8개의 피에조 센서로 수집했습니다<br/>')
+    rep('thesis', '노크 위치를 9개 구역으로 구분합니다</p>', '노크 위치를 9개 구역으로 구분했습니다</p>')
     skills = re.findall(r'<section><span aria-hidden="true" class="skill-index">\d\d</span>.*?</section>', A['profile'], flags=re.S)
     assert len(skills) == 3
     order = [skills[1], skills[0], skills[2]]
     order = [re.sub(r'class="skill-index">\d\d<', f'class="skill-index">{i:02d}<', s) for i, s in enumerate(order, 1)]
     A['profile'] = A['profile'].replace(''.join(skills), ''.join(order))
-    dropped = ['plc', 'thesis', 'travel']
+    dropped = ['plc', 'robot', 'travel']
 n = len(keep); out = []; fig = 0
 def renum(m):
     global fig

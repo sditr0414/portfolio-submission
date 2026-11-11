@@ -1219,3 +1219,5 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 #opencv-locate .sg{align-items:stretch!important}
 #opencv-locate .sg>.text-stack{display:flex;flex-direction:column}
 #opencv-locate .sg>.text-stack section{flex:1 1 0;display:flex;flex-direction:column;justify-content:center}
+.gui-page .system-figure{align-self:center}
+.gui-page .system-figure img{width:100%;height:auto}

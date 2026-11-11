@@ -51,6 +51,7 @@ rep('opencv-locate', '<p class="deck">AI가 찾은 영역을 OpenCV·CAD 형상�
 cards = re.search(r'<div class="s26-cards">.*?</div>(?=<table)', A['opencv-inspect'], flags=re.S).group(0)
 table = re.search(r'<table class="s26-table">.*?</table>', A['opencv-inspect'], flags=re.S).group(0)
 take = re.search(r'<p class="s26-take">.*?</p>', A['opencv-inspect'], flags=re.S).group(0)
+guifig = re.search(r'<figure class="system-figure figure-board"><div class="inline-demo">.*?</figure>', A['opencv-inspect'], flags=re.S).group(0)
 logfig = re.search(r'<figure class="s26-fig figure-board">.*?</figure>', A['opencv-log'], flags=re.S).group(0)
 A['opencv-inspect'] = A['opencv-inspect'].replace(body_of('opencv-inspect'),
     '<div class="slide-body"><div class="s26-two model"><div><p class="s26-dhead">부품 검사</p>' + cards + table + take
@@ -59,6 +60,20 @@ A['opencv-inspect'] = A['opencv-inspect'].replace(body_of('opencv-inspect'),
       '<div><dt>기록</dt><dd>판정 영상·오류 기록 저장</dd></div></dl></div></div></div>')
 rep('opencv-inspect', '<p class="deck">티칭 GUI에서 기준 설정·스텝 편집과 측정·검사 결과를 함께 관리합니다</p>',
     '<p class="deck">OpenCV만으로 생긴 구분 오류를 없애려고 종류와 안착 검사를 나누고, 제자리를 벗어난 부품은 작업을 멈추게 했습니다</p>')
+if VARIANT == 'control':
+    # control deck: operator screens instead of the inspection page
+    A['opencv-inspect'] = re.sub(r'(<h2 id="opencv-inspect-title">).*?(</h2>)', r'\1티칭 GUI와 Windows 관제 화면\2', A['opencv-inspect'], flags=re.S)
+    A['opencv-inspect'] = re.sub(r'<p class="deck">.*?</p>', '<p class="deck">동작을 가르치는 화면과 작업을 요청하는 화면을 만들고, 통신이 끊기면 팔이 멈추게 했습니다</p>', A['opencv-inspect'], count=1, flags=re.S)
+    A['opencv-inspect'] = A['opencv-inspect'].replace(body_of('opencv-inspect'),
+        '<div class="slide-body"><div class="split submission-two fill gui-page">' + guifig
+        + '<div class="text-stack">'
+          '<section><h3>티칭 GUI · Python Tkinter</h3><p>원점·TCP·카메라 좌표 기준 설정과 스텝 편집을 한 화면에서 처리<br/>'
+          '카메라가 찾은 지그와 <strong>부품 안착 검사 결과를 같은 화면에 표시</strong></p></section>'
+          '<section><h3>관제 화면 · Windows WPF</h3><p>조립·적재·정지·재개 명령을 Windows 화면에서 요청하고 처리 상태 확인<br/>'
+          'Ubuntu 중계 프로그램이 <strong>HTTPS/WSS와 ROS2 Action 클라이언트를 연결</strong></p></section>'
+          '<section><h3>통신 단절과 정지 처리</h3><p>PC와 Raspberry Pi5가 0.25초마다 생존 신호를 교환<br/>'
+          '<strong>3초 동안 응답이 없으면 작업 중인 팔을 멈추고 작업 보류</strong><br/>긴급정지는 다른 요청보다 먼저 전송</p></section>'
+          '</div></div></div>')
 rep('opencv-model', '<p class="deck">지그·단품·부분 조립체·완제품 13개 클래스를 구분하고, Raspberry Pi5에서 실행 형식과 모델 크기를 정했습니다</p>',
     '<p class="deck">실물로 반복해 찍기 어려운 장면은 Isaac Sim 가상 작업대에서 만들어 학습하고, Raspberry Pi5에 맞춰 실행 형식과 모델 크기를 정했습니다</p>')
 rep('opencv-model', '<div><dt>가상 데이터</dt><dd>오안착 137장·경계 사례 45장 포함, 배치·적재·조명 변화</dd></div>',
@@ -79,7 +94,7 @@ rep('opencv-pose', '<div class="s29-board s29-pose">',
     '</div><div class="s29-board s29-pose">')
 rep('opencv-pose', '</b>지그가 움직인 만큼 집게 작업점을 옮기고, 높이와 벌림은 유지</figcaption>',
     '</b>지그를 옮기고 돌려도 저장한 동작으로 부품을 올려놓는 시연(위)과 목표 보정 방식(아래)</figcaption>')
-ARM = ['opencv', 'opencv-pose', 'opencv-locate'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-model', 'opencv-inspect']
+ARM = ['opencv', 'opencv-pose', 'opencv-locate', 'opencv-inspect'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-model', 'opencv-inspect']
 for k in ARM + ['plc', 'plc-detail', 'vision', 'vision-detail', 'thesis', 'thesis-results']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)
 for n, k in enumerate(ARM, 1):

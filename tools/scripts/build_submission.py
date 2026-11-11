@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Reduce the 19-slide master (docs/index.html) to the 9-slide submission deck, in place.
+"""Reduce the 19-slide master (docs/index.html) to a 9-slide submission deck, in place.
 
-Run on a copy of the master deck. Keeps: cover, education, robot arm (3), mobile robot (2),
-walking aid (2). Drops PLC, knock research, Travel Visualizer.
+  build_submission.py control   robot arm: overview / pose (ROS2, FK, IK) / position; then mobile robot, PLC
+  build_submission.py vision    robot arm: overview / position / inspection + model; then walking aid, mobile robot
+
+Run on a copy of the master deck.
 """
 import re
+import sys
+VARIANT = sys.argv[1] if len(sys.argv) > 1 else 'control'
+assert VARIANT in ('control', 'vision'), VARIANT
 from pathlib import Path
 P = Path(__file__).resolve().parents[2] / 'docs' / 'index.html'
 t = P.read_text()
@@ -22,7 +27,10 @@ def body_of(key):
 
 # --- cover: short introduction only, skills in even rows
 rep('profile', '<p class="hero-line">설계부터 구현, 디버깅까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>',
+    '<p class="hero-line">ROS2로 로봇팔 동작을 제어하고,<br/>STM32 펌웨어와 통신 규격을 만들었습니다</p>' if VARIANT == 'control' else
     '<p class="hero-line">비전으로 로봇팔 동작을 보정하고,<br/>그 모델을 Raspberry Pi5에 올렸습니다</p>')
+rep('profile', '<p class="intro-label">로봇 제어 · 비전 · 임베디드 신입</p>',
+    '<p class="intro-label">로봇 제어 · 임베디드 신입</p>' if VARIANT == 'control' else '<p class="intro-label">로봇 비전 · 제어 신입</p>')
 rep('profile', '<p>C · C++<br/>STM32 · FreeRTOS · PLC</p>', '<p>C · C++ · STM32<br/>FreeRTOS · PLC</p>')
 rep('profile', '<p>Python · ROS2<br/>OpenCV · YOLO · TFLite</p>', '<p>Python · ROS2 · OpenCV<br/>YOLO · TFLite</p>')
 
@@ -42,9 +50,11 @@ A['opencv-inspect'] = A['opencv-inspect'].replace(body_of('opencv-inspect'),
 rep('opencv-inspect', '>부품 종류와 제자리 안착을 따로 확인</h2>', '>부품 종류·안착 검사와 Raspberry Pi5 경량화</h2>')
 rep('opencv-inspect', '<p class="deck">티칭 GUI에서 기준 설정·스텝 편집과 측정·검사 결과를 함께 관리합니다</p>',
     '<p class="deck">OpenCV만으로 생긴 구분 오류를 없애려고 종류와 안착 검사를 나누고, Raspberry Pi5에 맞춰 실행 형식과 모델 크기를 정했습니다</p>')
-for k in ['opencv', 'opencv-locate', 'opencv-inspect']:
+rep('opencv-pose', '지그의 이동·회전만큼 집게 목표와 관절값을 다시 계산합니다</p>', '지그의 이동·회전만큼 집게 목표와 관절값을 다시 계산했습니다</p>')
+ARM = ['opencv', 'opencv-pose', 'opencv-locate'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-inspect']
+for k in ARM + ['plc', 'plc-detail', 'vision', 'vision-detail']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)
-for n, k in enumerate(['opencv', 'opencv-locate', 'opencv-inspect'], 1):
+for n, k in enumerate(ARM, 1):
     A[k] = re.sub(r'<span class="part-number">\d / 6</span>', f'<span class="part-number">{n} / 3</span>', A[k])
 
 # --- mobile robot (3 -> 2): structure and fixes on one text slide
@@ -63,7 +73,11 @@ rep('vision-detail', '<p class="deck">입력 해상도와 모델 형식을 조�
     '<p class="deck">Raspberry Pi5 한 대에서 두 모델을 함께 돌리기 위해 입력과 모델을 줄이고, 판단 영역을 보행과 차량으로 나눴습니다</p>')
 
 # --- finished projects: past tense
-rep('opencv', '지그 위치와 부품 상태를 확인합니다</p>', '지그 위치와 부품 상태를 확인했습니다</p>')
+if VARIANT == 'control':
+    rep('opencv', '<p class="deck">Raspberry Pi5에서 AI·OpenCV·CAD로 지그 위치와 부품 상태를 확인합니다</p>',
+        '<p class="deck">ROS2 요청을 받아 지그 위치를 다시 재고, 저장한 동작을 그 위치에 맞춰 실행했습니다</p>')
+else:
+    rep('opencv', '지그 위치와 부품 상태를 확인합니다</p>', '지그 위치와 부품 상태를 확인했습니다</p>')
 rep('opencv', '저장한 동작으로 조립·하차 공정을 이어갑니다<br/>', '저장한 동작으로 조립·하차 공정을 이어가게 했습니다<br/>')
 rep('opencv', '부품 종류와 안착 상태를 검사합니다</p>', '부품 종류와 안착 상태를 검사했습니다</p>')
 rep('opencv-locate', '위치·방향이 맞을 때만 채택합니다</p>', '위치·방향이 맞을 때만 채택했습니다</p>')
@@ -73,7 +87,24 @@ rep('robot', '저장한 동작을 재생합니다</p>', '저장한 동작을 재
 rep('vision', '인도와 차도를 구분합니다<br/>', '인도와 차도를 구분했습니다<br/>')
 rep('vision', '음성으로 알려 줍니다</p>', '음성으로 알려 주게 했습니다</p>')
 
-keep = ['profile', 'resume', 'opencv', 'opencv-locate', 'opencv-inspect', 'robot', 'robot-system', 'vision', 'vision-detail']
+def renumber(k, old, new):
+    A[k] = A[k].replace(f'aria-label="프로젝트 {old}" class="project-number">{old}</b>', f'aria-label="프로젝트 {new}" class="project-number">{new}</b>')
+    A[k] = A[k].replace(f'data-project-no="{old}"', f'data-project-no="{new}"')
+
+if VARIANT == 'control':
+    keep = ['profile', 'resume'] + ARM + ['robot', 'robot-system', 'plc', 'plc-detail']
+    renumber('plc', '04', '03'); renumber('plc-detail', '04', '03')
+    dropped = ['vision', 'thesis', 'travel']
+else:
+    keep = ['profile', 'resume'] + ARM + ['vision', 'vision-detail', 'robot', 'robot-system']
+    for k, old, new in [('vision', '03', '02'), ('vision-detail', '03', '02'), ('robot', '02', '03'), ('robot-system', '02', '03')]:
+        renumber(k, old, new)
+    skills = re.findall(r'<section><span aria-hidden="true" class="skill-index">\d\d</span>.*?</section>', A['profile'], flags=re.S)
+    assert len(skills) == 3
+    order = [skills[1], skills[0], skills[2]]
+    order = [re.sub(r'class="skill-index">\d\d<', f'class="skill-index">{i:02d}<', s) for i, s in enumerate(order, 1)]
+    A['profile'] = A['profile'].replace(''.join(skills), ''.join(order))
+    dropped = ['plc', 'thesis', 'travel']
 n = len(keep); out = []; fig = 0
 def renum(m):
     global fig
@@ -85,7 +116,7 @@ for i, k in enumerate(keep, 1):
     out.append(f'<section class="page-shell" data-page="{i}">{a}')
 html = head + '</section>'.join(out) + tail
 html = html.replace('<span id="mobile-count">01 / 19</span>', f'<span id="mobile-count">01 / {n:02d}</span>')
-for sec in ['plc', 'thesis', 'travel']:
+for sec in dropped:
     html, c = re.subn(rf'<a aria-label="[^"]*" data-label="[^"]*" data-section="{sec}".*?</a>', '', html, flags=re.S); assert c == 1, sec
 P.write_text(html)
 print('slides', n, 'figures', fig)

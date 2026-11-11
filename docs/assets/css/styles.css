@@ -1194,3 +1194,4 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .project-opening .overview-copy .summary+.summary{margin-top:14px}
 .project-opening .overview-copy .tags{margin-top:20px}
 .knock-intro{align-items:center}
+.cover .hero-line{margin-bottom:0}

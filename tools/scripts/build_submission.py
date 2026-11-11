@@ -29,6 +29,10 @@ def body_of(key):
 rep('profile', '<p class="hero-line">설계부터 구현, 디버깅까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>',
     '<p class="hero-line">ROS2로 로봇팔 동작을 제어하고,<br/>STM32 펌웨어와 통신 규격을 만들었습니다</p>' if VARIANT == 'control' else
     '<p class="hero-line">비전으로 로봇팔 동작을 보정하고,<br/>그 모델을 Raspberry Pi5에 올렸습니다</p>')
+# submission copy: no contact line on the cover
+_c = re.search(r'<div class="contact-links">.*?</div>', A['profile'], flags=re.S).group(0)
+A['profile'] = A['profile'].replace(_c, '')
+assert 'naver.com' not in A['profile']
 rep('profile', '<p class="intro-label">로봇 제어 · 비전 · 임베디드 신입</p>',
     '<p class="intro-label">로봇 제어 · 임베디드 신입</p>' if VARIANT == 'control' else '<p class="intro-label">로봇 비전 · 제어 신입</p>')
 rep('profile', '<p>C · C++<br/>STM32 · FreeRTOS · PLC</p>', '<p>C · C++ · STM32<br/>FreeRTOS · PLC</p>')

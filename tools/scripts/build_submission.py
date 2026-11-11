@@ -160,11 +160,6 @@ else:
         renumber(k, old, new)
     rep('thesis', '8개의 피에조 센서로 수집합니다<br/>', '8개의 피에조 센서로 수집했습니다<br/>')
     rep('thesis', '노크 위치를 9개 구역으로 구분합니다</p>', '노크 위치를 9개 구역으로 구분했습니다</p>')
-    skills = re.findall(r'<section><span aria-hidden="true" class="skill-index">\d\d</span>.*?</section>', A['profile'], flags=re.S)
-    assert len(skills) == 3
-    order = [skills[1], skills[0], skills[2]]
-    order = [re.sub(r'class="skill-index">\d\d<', f'class="skill-index">{i:02d}<', s) for i, s in enumerate(order, 1)]
-    A['profile'] = A['profile'].replace(''.join(skills), ''.join(order))
     dropped = ['plc', 'robot', 'travel']
     # real-time detection screen on the overview; method and results on the second slide
     summary = re.search(r'<p class="summary">.*?</p>', A['thesis'], flags=re.S).group(0)
@@ -188,6 +183,12 @@ else:
     rep('thesis-results', '>입력 특징별 K-NN 검증 결과</h2>', '>신호 수집부터 입력 특징별 K-NN 검증까지</h2>')
     rep('thesis-results', '<p class="deck">같은 아크릴판에서 수집한 데이터를 학습 70%, 검증 30%로 무작위 분할해 비교했습니다</p>',
         '<p class="deck">같은 아크릴판에서 수집한 신호를 전처리하고, 입력 특징을 바꿔 가며 위치 분류 정확도를 비교했습니다</p>')
+# skills: robot·vision first in both decks
+skills = re.findall(r'<section><span aria-hidden="true" class="skill-index">\d\d</span>.*?</section>', A['profile'], flags=re.S)
+assert len(skills) == 3
+order = [skills[1], skills[0], skills[2]]
+order = [re.sub(r'class="skill-index">\d\d<', f'class="skill-index">{i:02d}<', s) for i, s in enumerate(order, 1)]
+A['profile'] = A['profile'].replace(''.join(skills), ''.join(order))
 # --- one column grid on every project slide; figure on the left, text on the right
 rep('plc', '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고, 수동 모드에서는 개별 제어할 수 있게 했습니다</p>',
     '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고,<br/>수동 모드에서는 개별 제어할 수 있게 했습니다</p>')

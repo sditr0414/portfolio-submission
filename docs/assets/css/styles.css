@@ -1237,5 +1237,5 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .specs.with-role{grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,2.3fr)}
 .specs.with-role .role dd{font-size:14.5px}
 .cover .site-line{margin:22px 0 0;font-size:14.5px;color:#c9d7e5;display:flex;gap:12px;align-items:center}
-.cover .site-line span{padding-right:12px;border-right:1px solid rgba(255,255,255,.35);font-size:13px}
-.cover .site-line a{color:#fff;text-decoration:none;font-weight:600;letter-spacing:.01em}
+.cover .site-line a{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:4px;text-decoration-color:rgba(255,255,255,.5)}
+.cover .site-line a span{font-size:13px;margin-left:2px}

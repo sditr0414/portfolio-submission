@@ -36,7 +36,7 @@ for _old, _st, _dt in [('<time>2026.04 – 2026.11 수료</time>', '수료', '20
     rep('resume', _old, f'<time><span class="edu-state">{_st}</span>{_dt}</time>')
 # submission copy: no contact line on the cover
 _c = re.search(r'<div class="contact-links">.*?</div>', A['profile'], flags=re.S).group(0)
-A['profile'] = A['profile'].replace(_c, '<p class="site-line"><span>포트폴리오 사이트</span><a href="https://sditr0414.github.io/">sditr0414.github.io</a></p>')
+A['profile'] = A['profile'].replace(_c, '<p class="site-line"><a href="https://sditr0414.github.io/">포트폴리오 사이트 <span aria-hidden="true">↗</span></a></p>')
 assert 'naver.com' not in A['profile']
 rep('profile', '<p class="intro-label">로봇 제어 · 비전 · 임베디드 신입</p>',
     '<p class="intro-label">로봇 제어 · 임베디드 신입</p>' if VARIANT == 'control' else '<p class="intro-label">로봇 비전 · 제어 신입</p>')

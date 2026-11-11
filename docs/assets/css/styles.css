@@ -1123,3 +1123,11 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .deck-ready.deck-reading:not(.exporting) .status-pill,
 .deck-ready.deck-reading:not(.exporting) .pick,
 .deck-ready.deck-reading:not(.exporting) .workflow section > span { font-size: 12px; }
+
+/* submission deck: cover result lines, two-column text slide */
+.cover .hero-facts{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:5px;font-size:16px;line-height:1.5;font-variant-numeric:tabular-nums}
+.cover .hero-facts li{display:flex;align-items:baseline;gap:12px}
+.cover .hero-facts b{font-weight:500;opacity:.78;min-width:118px}
+.cover .hero-facts small{font-size:12px;opacity:.7}
+.cover .hero-line{font-size:25px;margin:12px 0 14px}
+.submission-two{align-items:start}

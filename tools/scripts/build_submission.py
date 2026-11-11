@@ -139,10 +139,6 @@ rep('robot', '물품 회수·운반 시연품입니다<br/>', '물품 회수·�
 rep('robot', '저장한 동작을 재생합니다</p>', '저장한 동작을 재생하게 했습니다</p>')
 rep('vision', '인도와 차도를 구분합니다<br/>', '인도와 차도를 구분했습니다<br/>')
 rep('vision', '음성으로 알려 줍니다</p>', '음성으로 알려 주게 했습니다</p>')
-rep('vision', '<p class="summary">영상에서 사람·차량·장애물을 탐지하고 인도와 차도를 구분했습니다<br/>보행 경로에 가까운 대상을 판단해 음성으로 알려 주게 했습니다</p>',
-    '<p class="summary">시각장애인의 보행을 돕는 웨어러블 장치를 만들었습니다<br/>카메라 영상에서 사람·차량·장애물을 탐지하고 인도와 차도를 구분했습니다</p>'
-    '<p class="summary">객체는 <strong>YOLO26n 객체 검출</strong> 모델로 위치를 찾고,<br/>지면은 <strong>YOLO26n-seg 인스턴스 분할</strong> 모델로 영역을 나눴습니다</p>'
-    '<p class="summary">보행 경로에 가까운 대상을 판단해 음성으로 알려 주게 했습니다</p>')
 rep('vision', '<span>YOLO26n</span>', '<span>YOLO26n · YOLO26n-seg</span>')
 
 def renumber(k, old, new):
@@ -174,7 +170,7 @@ else:
         '<div class="slide-body"><figure class="main-figure figure-board knock-wide"><img alt="실시간 노크 위치 탐지 화면: 센서 신호와 주파수 분석, 예측 구역, 아크릴판을 두드리는 손" '
         'src="assets/images/knock-realtime.webp" width="1436" height="397"/>'
         '<figcaption><b class="fig-no">그림 17. </b>실시간 탐지 화면 · 가운데 구역을 두드리자 시간·주파수 특징 모두 같은 구역으로 예측</figcaption></figure>'
-        '<div class="knock-intro"><div>' + summary + '</div><div><!--K2-->' + tags + '</div></div>' + specs + '</div>')
+        '<div class="knock-intro text-stack"><section><h3>신호 수집</h3>' + summary.replace('class="summary"','') + '</section><section><h3>모델 비교</h3><!--K2--></section></div>' + tags + specs + '</div>')
     table = re.search(r'<table class="result-table">.*?</table>', A['thesis-results'], flags=re.S).group(0)
     A['thesis-results'] = A['thesis-results'].replace(body_of('thesis-results'),
         '<div class="slide-body"><div class="split submission-two knock-method"><div class="text-stack">'
@@ -192,21 +188,25 @@ rep('plc', '공급·가공·분류·저장 공정을 연결했습니다<br/>여�
     '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고,<br/>수동 모드에서는 개별 제어할 수 있게 했습니다</p>')
 def set_summary(k, paras):
     old = re.search(r'<p class="summary">.*?</p>', A[k], flags=re.S).group(0)
-    A[k] = A[k].replace(old, ''.join(f'<p class="summary">{t}</p>' for t in paras), 1)
+    A[k] = A[k].replace(old, '<div class="text-stack ov-stack">' + ''.join(f'<section><h3>{h}</h3><p>{t}</p></section>' for h, t in paras) + '</div>', 1)
 set_summary('opencv', [
-    '운반 로봇의 정차 위치가 달라지고 부품이 서로 가려도<br/>저장한 동작으로 조립·하차 공정을 이어가게 했습니다',
-    '카메라로 <strong>지그를 다시 측정해 동작 목표를 보정</strong>하고,<br/><strong>부품 종류와 안착 상태를 검사</strong>했습니다',
-    '<strong>ROS2 Action</strong>으로 작업 요청을 받고,<br/>순기구학·역기구학으로 집게 목표와 관절값을 계산했습니다' if VARIANT == 'control' else
-    '지그·팔레트와 부품은 <strong>YOLO26 분할 모델</strong>과 설계 형상 맞춤으로 찾고,<br/>모델은 <strong>Raspberry Pi5</strong>에서 실행했습니다'])
+    ('해결한 문제', '운반 로봇의 정차 위치가 달라지고 부품이 서로 가려도<br/>저장한 동작으로 조립·하차 공정을 이어가게 했습니다'),
+    ('방법', '카메라로 <strong>지그를 다시 측정해 동작 목표를 보정</strong>하고,<br/><strong>부품 종류와 안착 상태를 검사</strong>했습니다'),
+    ('동작 제어', '<strong>ROS2 Action</strong>으로 작업 요청을 받고,<br/>순기구학·역기구학으로 집게 목표와 관절값을 계산했습니다') if VARIANT == 'control' else
+    ('인식 모델', '지그·팔레트와 부품은 <strong>YOLO26 분할 모델</strong>과 설계 형상 맞춤으로 찾고,<br/>모델은 <strong>Raspberry Pi5</strong>에서 실행했습니다')])
 set_summary('robot', [
-    '이동체와 로봇팔을 결합한 물품 회수·운반 시연품을 만들었습니다<br/>앱으로 주행과 관절을 수동 조작하고, 저장한 동작을 재생하게 했습니다',
-    '<strong>STM32F411과 FreeRTOS</strong>로 펌웨어를 작성하고,<br/>앱과는 Bluetooth로 <strong>16바이트 명령·응답</strong>을 주고받았습니다',
-    '서보 6개는 PCA9685로 제어하고, 티칭한 동작은 Flash에 저장했습니다'])
+    ('만든 것', '이동체와 로봇팔을 결합한 물품 회수·운반 시연품을 만들었습니다<br/>앱으로 주행과 관절을 수동 조작하고, 저장한 동작을 재생하게 했습니다'),
+    ('펌웨어와 통신', '<strong>STM32F411과 FreeRTOS</strong>로 펌웨어를 작성하고,<br/>앱과는 Bluetooth로 <strong>16바이트 명령·응답</strong>을 주고받았습니다'),
+    ('구동과 저장', '서보 6개는 PCA9685로 제어하고, 티칭한 동작은 Flash에 저장했습니다')])
 set_summary('plc', [
-    '컨베이어·실린더·서보모터로 공급·가공·분류·저장 공정을 연결했습니다',
-    '금속·비금속을 판별해 <strong>1~4층 창고에 병렬로 적재</strong>하고,<br/>수동 모드에서는 층별로 개별 제어할 수 있게 했습니다',
-    'HMI 화면에서 가공 횟수와 시간을 지정하고 적재 상태를 확인하게 했습니다'])
-_k2 = '<p class="summary">입력 특징을 <strong>센서 간 시간 차·시간 영역·주파수 영역</strong>으로 바꿔 가며<br/><strong>K-NN·SVM·ANN</strong> 모델의 위치 분류 정확도를 비교했습니다</p>'
+    ('공정', '컨베이어·실린더·서보모터로 공급·가공·분류·저장 공정을 연결했습니다'),
+    ('병렬 적재', '금속·비금속을 판별해 <strong>1~4층 창고에 병렬로 적재</strong>하고,<br/>수동 모드에서는 층별로 개별 제어할 수 있게 했습니다'),
+    ('HMI', 'HMI 화면에서 가공 횟수와 시간을 지정하고 적재 상태를 확인하게 했습니다')])
+set_summary('vision', [
+    ('만든 것', '시각장애인의 보행을 돕는 웨어러블 장치를 만들었습니다<br/>카메라 영상에서 사람·차량·장애물을 탐지하고 인도와 차도를 구분했습니다'),
+    ('사용한 모델', '객체는 <strong>YOLO26n 객체 검출</strong> 모델로 위치를 찾고,<br/>지면은 <strong>YOLO26n-seg 인스턴스 분할</strong> 모델로 영역을 나눴습니다'),
+    ('알림', '보행 경로에 가까운 대상을 판단해 음성으로 알려 주게 했습니다')])
+_k2 = '<p>입력 특징을 <strong>센서 간 시간 차·시간 영역·주파수 영역</strong>으로 바꿔 가며<br/><strong>K-NN·SVM·ANN</strong> 모델의 위치 분류 정확도를 비교했습니다</p>'
 if '<!--K2-->' in A['thesis']:
     A['thesis'] = A['thesis'].replace('<!--K2-->', _k2)
 # role blocks removed: every slide already shows only my own work

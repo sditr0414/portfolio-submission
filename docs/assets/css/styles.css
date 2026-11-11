@@ -1185,5 +1185,12 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .s26-two.model .s26-mini.data-mix dd{font-size:13px;white-space:nowrap}
 .s26-two.model .s26-mini.data-mix>div{padding-left:10px;padding-right:6px}
 .s26-two.model .s26-mini.data-mix>div:first-child{padding-left:0}
-#vision .overview-copy .summary+.summary{margin-top:10px}
-#vision .overview-copy .summary strong{color:var(--deep);font-weight:700}
+.slide .summary+.summary{margin-top:10px}
+.slide .summary strong{color:var(--deep);font-weight:700}
+#opencv-model .s26-pair img{max-height:112px;object-fit:cover}
+#opencv .overview-copy .summary{line-height:1.6}
+#opencv .overview-copy .summary+.summary{margin-top:7px}
+#opencv .overview-copy .role-block{margin-top:12px;margin-bottom:10px}
+#thesis .knock-wide img{max-height:124px}
+#thesis .knock-intro .summary{line-height:1.6}
+#thesis .knock-intro .summary+.summary{margin-top:6px}

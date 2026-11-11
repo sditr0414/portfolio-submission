@@ -42,19 +42,22 @@ rep('opencv-locate', '<p class="deck">AI가 찾은 영역을 OpenCV·CAD 형상�
 cards = re.search(r'<div class="s26-cards">.*?</div>(?=<table)', A['opencv-inspect'], flags=re.S).group(0)
 table = re.search(r'<table class="s26-table">.*?</table>', A['opencv-inspect'], flags=re.S).group(0)
 take = re.search(r'<p class="s26-take">.*?</p>', A['opencv-inspect'], flags=re.S).group(0)
-decisions = re.search(r'<div class="s26-decisions">.*?</div><p class="s26-note">.*?</p>', A['opencv-model'], flags=re.S).group(0)
+logfig = re.search(r'<figure class="s26-fig figure-board">.*?</figure>', A['opencv-log'], flags=re.S).group(0)
 A['opencv-inspect'] = A['opencv-inspect'].replace(body_of('opencv-inspect'),
     '<div class="slide-body"><div class="s26-two model"><div><p class="s26-dhead">부품 검사</p>' + cards + table + take
-    + ('<dl class="s26-mini data-mix"><div><dt>실물·가상 학습 데이터</dt><dd>실물 304장 · Isaac Sim 912장</dd></div>'
-       '<div><dt>가상으로 보완한 장면</dt><dd>오안착 137장 · 경계 45장</dd></div>'
-       '<div><dt>오안착 검출 사례</dt><dd>이탈 7.8mm &gt; 허용 5mm</dd></div></dl>' if VARIANT == 'vision' else
-       '<dl class="s26-mini"><div><dt>오안착 검출 사례</dt><dd>이탈 7.8mm &gt; 허용 5mm</dd></div><div><dt>처리</dt><dd>안착 불합격 · 작업 중단</dd></div>'
-       '<div><dt>기록</dt><dd>판정 영상·오류 기록 저장</dd></div></dl>')
-      + '</div><div>'
-      + decisions + '</div></div></div>')
-rep('opencv-inspect', '>부품 종류와 제자리 안착을 따로 확인</h2>', '>부품 종류·안착 검사와 Raspberry Pi5 경량화</h2>')
+    + '</div><div><p class="s26-dhead">오안착 검출 사례</p>' + logfig
+    + '<dl class="s26-mini"><div><dt>판정</dt><dd>이탈 7.8mm &gt; 허용 5mm</dd></div><div><dt>처리</dt><dd>안착 불합격 · 작업 중단</dd></div>'
+      '<div><dt>기록</dt><dd>판정 영상·오류 기록 저장</dd></div></dl></div></div></div>')
 rep('opencv-inspect', '<p class="deck">티칭 GUI에서 기준 설정·스텝 편집과 측정·검사 결과를 함께 관리합니다</p>',
-    '<p class="deck">OpenCV만으로 생긴 구분 오류를 없애려고 종류와 안착 검사를 나누고, Raspberry Pi5에 맞춰 실행 형식과 모델 크기를 정했습니다</p>')
+    '<p class="deck">OpenCV만으로 생긴 구분 오류를 없애려고 종류와 안착 검사를 나누고, 제자리를 벗어난 부품은 작업을 멈추게 했습니다</p>')
+rep('opencv-model', '<p class="deck">지그·단품·부분 조립체·완제품 13개 클래스를 구분하고, Raspberry Pi5에서 실행 형식과 모델 크기를 정했습니다</p>',
+    '<p class="deck">실물로 반복해 찍기 어려운 장면은 Isaac Sim 가상 작업대에서 만들어 학습하고, Raspberry Pi5에 맞춰 실행 형식과 모델 크기를 정했습니다</p>')
+rep('opencv-model', '<div><dt>가상 데이터</dt><dd>오안착 137장·경계 사례 45장 포함, 배치·적재·조명 변화</dd></div>',
+    '<div><dt>Isaac Sim 가상 데이터</dt><dd>살짝 벗어난 배치는 실물로 같은 조건을 반복해 찍기 어려워 가상으로 생성<br/>오안착 137장·경계 사례 45장 포함, 배치·적재·조명 변화</dd></div>')
+rep('opencv-model', '<p>평균 IoU가 비슷한 혼합·순차 중 편차 0.60으로 가장 안정적</p>',
+    '<p>실물·가상을 섞은 학습과 차례로 한 학습을 비교, 편차 0.60으로 가장 안정적</p>')
+rep('opencv-model', '<p class="s26-note">실물 31장·169개 · 신뢰도 50% · 처리 시간은 Pi5 중앙값</p>',
+    '<p class="s26-note">학습에 넣지 않은 실물 31장·169개로 비교 · 신뢰도 50% · 처리 시간은 Pi5 중앙값</p>')
 if VARIANT == 'vision':
     rep('opencv', '학습 데이터·모델 비교와 실행 기준 검증', '실물·Isaac Sim 가상 데이터로 학습, 모델 비교와 실행 기준 검증')
 rep('opencv-pose', '지그의 이동·회전만큼 집게 목표와 관절값을 다시 계산합니다</p>', '지그의 이동·회전만큼 집게 목표와 관절값을 다시 계산했습니다</p>')
@@ -67,11 +70,11 @@ rep('opencv-pose', '<div class="s29-board s29-pose">',
     '</div><div class="s29-board s29-pose">')
 rep('opencv-pose', '</b>지그가 움직인 만큼 집게 작업점을 옮기고, 높이와 벌림은 유지</figcaption>',
     '</b>지그를 옮기고 돌려도 저장한 동작으로 부품을 올려놓는 시연(위)과 목표 보정 방식(아래)</figcaption>')
-ARM = ['opencv', 'opencv-pose', 'opencv-locate'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-inspect']
+ARM = ['opencv', 'opencv-pose', 'opencv-locate'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-inspect', 'opencv-model']
 for k in ARM + ['plc', 'plc-detail', 'vision', 'vision-detail', 'thesis', 'thesis-results']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)
 for n, k in enumerate(ARM, 1):
-    A[k] = re.sub(r'<span class="part-number">\d / 6</span>', f'<span class="part-number">{n} / 3</span>', A[k])
+    A[k] = re.sub(r'<span class="part-number">\d / 6</span>', f'<span class="part-number">{n} / {len(ARM)}</span>', A[k])
 
 # --- mobile robot (3 -> 2): structure and fixes on one text slide
 stack = re.search(r'<div class="text-stack">.*?</section></div>', A['robot-system'], flags=re.S).group(0)
@@ -183,6 +186,24 @@ else:
 # --- one column grid on every project slide; figure on the left, text on the right
 rep('plc', '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고, 수동 모드에서는 개별 제어할 수 있게 했습니다</p>',
     '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고,<br/>수동 모드에서는 개별 제어할 수 있게 했습니다</p>')
+def set_summary(k, paras):
+    old = re.search(r'<p class="summary">.*?</p>', A[k], flags=re.S).group(0)
+    A[k] = A[k].replace(old, ''.join(f'<p class="summary">{t}</p>' for t in paras), 1)
+set_summary('opencv', [
+    '운반 로봇의 정차 위치가 달라지고 부품이 서로 가려도<br/>저장한 동작으로 조립·하차 공정을 이어가게 했습니다',
+    '카메라로 <strong>지그를 다시 측정해 동작 목표를 보정</strong>하고,<br/><strong>부품 종류와 안착 상태를 검사</strong>했습니다',
+    '<strong>ROS2 Action</strong>으로 작업 요청을 받고,<br/>순기구학·역기구학으로 집게 목표와 관절값을 계산했습니다' if VARIANT == 'control' else
+    '지그·팔레트와 부품은 <strong>YOLO26 분할 모델</strong>과 설계 형상 맞춤으로 찾고,<br/>모델은 <strong>Raspberry Pi5</strong>에서 실행했습니다'])
+set_summary('robot', [
+    '이동체와 로봇팔을 결합한 물품 회수·운반 시연품을 만들었습니다<br/>앱으로 주행과 관절을 수동 조작하고, 저장한 동작을 재생하게 했습니다',
+    '<strong>STM32F411과 FreeRTOS</strong>로 펌웨어를 작성하고,<br/>앱과는 Bluetooth로 <strong>16바이트 명령·응답</strong>을 주고받았습니다',
+    '서보 6개는 PCA9685로 제어하고, 티칭한 동작은 Flash에 저장했습니다'])
+set_summary('plc', [
+    '컨베이어·실린더·서보모터로 공급·가공·분류·저장 공정을 연결했습니다',
+    '금속·비금속을 판별해 <strong>1~4층 창고에 병렬로 적재</strong>하고,<br/>수동 모드에서는 층별로 개별 제어할 수 있게 했습니다',
+    'HMI 화면에서 가공 횟수와 시간을 지정하고 적재 상태를 확인하게 했습니다'])
+ks = re.search(r'<p class="summary">.*?</p>', A['thesis'], flags=re.S).group(0)
+A['thesis'] = A['thesis'].replace(ks, ks + '<p class="summary">입력 특징을 <strong>센서 간 시간 차·시간 영역·주파수 영역</strong>으로 바꿔 가며<br/><strong>K-NN·SVM·ANN</strong> 모델의 위치 분류 정확도를 비교했습니다</p>', 1)
 m = re.search(r'<div class="split">(<div class="text-stack">.*?</section></div>)(<div><figure class="roi-figure.*?</figure></div>)</div>', A['vision-detail'], flags=re.S)
 A['vision-detail'] = A['vision-detail'].replace(m.group(0), '<div class="split">' + m.group(2) + m.group(1) + '</div>')
 for k in keep:

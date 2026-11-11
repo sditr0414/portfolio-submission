@@ -193,7 +193,7 @@ else:
         '<section data-step="01"><h3>데이터 수집</h3><p>센서 8개로 9개 위치를 위치당 140회, 총 1,260회 기록<br/>2,500Hz로 0.4초, 트리거 이전 0.05초 포함</p></section>'
         '<section data-step="02"><h3>전처리</h3><p>61Hz 하이패스 필터와 데이터 평탄화 후 정규화</p></section>'
         '<section data-step="03"><h3>특징 선정</h3><p>다중 선형회귀로 중요도를 판단해<br/>시간 영역 4개, 주파수 영역 3개, 센서 간 시간 차 1개 선정</p></section>'
-        '<section data-step="04"><h3>모델 선정과 실시간 예측</h3><p>K-NN·SVM·ANN을 비교해 <strong>K-NN 선정</strong>, 학습 70%·검증 30%로 검증<br/>학습한 모델로 두드린 위치를 실시간 예측</p></section>'
+        '<section data-step="04"><h3>모델 선정과 실시간 예측</h3><p>K-NN·SVM·ANN 중 <strong>평균 정확도가 가장 높은 K-NN 선정</strong><br/>학습 70%·검증 30%로 검증하고, 두드린 위치를 실시간 예측</p></section>'
         '</div><div><h3>K-NN 검증 정확도</h3>' + table +
         '<p class="s26-take">센서 간 시간 차만 쓴 방식보다 <b>시간·주파수 영역 특징의 정확도가 더 높음</b></p></div></div></div>')
     rep('thesis-results', '>입력 특징별 K-NN 검증 결과</h2>', '>신호 수집부터 입력 특징별 K-NN 검증까지</h2>')
@@ -226,7 +226,7 @@ set_summary('vision', [
     ('프로젝트 개요', '시각장애인의 보행을 돕는 웨어러블 장치를 만들었습니다<br/>카메라 영상에서 사람·차량·장애물을 탐지하고 인도와 차도를 구분했습니다'),
     ('적용 모델', '객체는 <strong>YOLO26n 객체 검출</strong> 모델로 위치를 찾고,<br/>지면은 <strong>YOLO26n-seg 인스턴스 분할</strong> 모델로 영역을 나눴습니다'),
     ('위험 알림', '보행 경로에 가까운 대상을 판단해 음성으로 알려 주게 했습니다')])
-_k2 = '<p><strong>K-NN·SVM·ANN</strong> 모델을 비교해 K-NN을 선정했습니다<br/>입력 특징을 <strong>시간 차·시간 영역·주파수 영역</strong>으로 바꿔 정확도를 검증했습니다</p>'
+_k2 = '<p><strong>K-NN·SVM·ANN</strong> 중 평균 정확도가 가장 높은 K-NN을 선정했습니다<br/>입력 특징을 <strong>시간 차·시간 영역·주파수 영역</strong>으로 바꿔 정확도를 검증했습니다</p>'
 if '<!--K2-->' in A['thesis']:
     A['thesis'] = A['thesis'].replace('<!--K2-->', _k2)
 def _specs(k, cells, role):

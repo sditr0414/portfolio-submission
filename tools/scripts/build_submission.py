@@ -45,11 +45,18 @@ take = re.search(r'<p class="s26-take">.*?</p>', A['opencv-inspect'], flags=re.S
 decisions = re.search(r'<div class="s26-decisions">.*?</div><p class="s26-note">.*?</p>', A['opencv-model'], flags=re.S).group(0)
 A['opencv-inspect'] = A['opencv-inspect'].replace(body_of('opencv-inspect'),
     '<div class="slide-body"><div class="s26-two model"><div><p class="s26-dhead">부품 검사</p>' + cards + table + take
-    + '<dl class="s26-mini"><div><dt>오안착 검출 사례</dt><dd>이탈 7.8mm &gt; 허용 5mm</dd></div><div><dt>처리</dt><dd>안착 불합격 · 작업 중단</dd></div>'
-      '<div><dt>기록</dt><dd>판정 영상·오류 기록 저장</dd></div></dl></div><div>' + decisions + '</div></div></div>')
+    + ('<dl class="s26-mini data-mix"><div><dt>실물·가상 학습 데이터</dt><dd>실물 304장 · Isaac Sim 912장</dd></div>'
+       '<div><dt>가상으로 보완한 장면</dt><dd>오안착 137장 · 경계 45장</dd></div>'
+       '<div><dt>오안착 검출 사례</dt><dd>이탈 7.8mm &gt; 허용 5mm</dd></div></dl>' if VARIANT == 'vision' else
+       '<dl class="s26-mini"><div><dt>오안착 검출 사례</dt><dd>이탈 7.8mm &gt; 허용 5mm</dd></div><div><dt>처리</dt><dd>안착 불합격 · 작업 중단</dd></div>'
+       '<div><dt>기록</dt><dd>판정 영상·오류 기록 저장</dd></div></dl>')
+      + '</div><div>'
+      + decisions + '</div></div></div>')
 rep('opencv-inspect', '>부품 종류와 제자리 안착을 따로 확인</h2>', '>부품 종류·안착 검사와 Raspberry Pi5 경량화</h2>')
 rep('opencv-inspect', '<p class="deck">티칭 GUI에서 기준 설정·스텝 편집과 측정·검사 결과를 함께 관리합니다</p>',
     '<p class="deck">OpenCV만으로 생긴 구분 오류를 없애려고 종류와 안착 검사를 나누고, Raspberry Pi5에 맞춰 실행 형식과 모델 크기를 정했습니다</p>')
+if VARIANT == 'vision':
+    rep('opencv', '학습 데이터·모델 비교와 실행 기준 검증', '실물·Isaac Sim 가상 데이터로 학습, 모델 비교와 실행 기준 검증')
 rep('opencv-pose', '지그의 이동·회전만큼 집게 목표와 관절값을 다시 계산합니다</p>', '지그의 이동·회전만큼 집게 목표와 관절값을 다시 계산했습니다</p>')
 # real photos of the jig-compensation demo above the diagram
 rep('opencv-pose', '<div class="s29-board s29-pose">',

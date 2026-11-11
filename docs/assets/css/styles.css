@@ -1181,3 +1181,7 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 #plc-detail .sg{grid-template-columns:minmax(0,1fr) minmax(0,1.12fr)!important}
 #plc-detail .sg.fill>dl.process-list dd{font-size:14px;line-height:1.6;padding-top:9px;padding-bottom:9px}
 #plc-detail .sg.fill>dl.process-list dt{padding-top:9px;padding-bottom:9px}
+.s26-two.model .s26-mini.data-mix{grid-template-columns:1.12fr 1.08fr 1fr}
+.s26-two.model .s26-mini.data-mix dd{font-size:13px;white-space:nowrap}
+.s26-two.model .s26-mini.data-mix>div{padding-left:10px;padding-right:6px}
+.s26-two.model .s26-mini.data-mix>div:first-child{padding-left:0}

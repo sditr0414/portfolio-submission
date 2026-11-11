@@ -51,6 +51,15 @@ rep('opencv-inspect', '>부품 종류와 제자리 안착을 따로 확인</h2>'
 rep('opencv-inspect', '<p class="deck">티칭 GUI에서 기준 설정·스텝 편집과 측정·검사 결과를 함께 관리합니다</p>',
     '<p class="deck">OpenCV만으로 생긴 구분 오류를 없애려고 종류와 안착 검사를 나누고, Raspberry Pi5에 맞춰 실행 형식과 모델 크기를 정했습니다</p>')
 rep('opencv-pose', '지그의 이동·회전만큼 집게 목표와 관절값을 다시 계산합니다</p>', '지그의 이동·회전만큼 집게 목표와 관절값을 다시 계산했습니다</p>')
+# real photos of the jig-compensation demo above the diagram
+rep('opencv-pose', '<div class="s29-board s29-pose">',
+    '<div class="pose-photos">'
+    '<figure><img alt="처음 지그 위치에 부품을 올려놓는 로봇팔" src="assets/images/opencv-pose-1.webp" width="636" height="636"/><span>처음 위치</span></figure>'
+    '<figure><img alt="지그를 옮긴 뒤 부품을 올려놓는 로봇팔" src="assets/images/opencv-pose-2.webp" width="636" height="636"/><span>지그 이동 후</span></figure>'
+    '<figure><img alt="지그를 다시 옮기고 돌린 뒤 부품을 올려놓는 로봇팔" src="assets/images/opencv-pose-3.webp" width="636" height="636"/><span>다시 이동·회전 후</span></figure>'
+    '</div><div class="s29-board s29-pose">')
+rep('opencv-pose', '</b>지그가 움직인 만큼 집게 작업점을 옮기고, 높이와 벌림은 유지</figcaption>',
+    '</b>지그를 옮기고 돌려도 저장한 동작으로 부품을 올려놓는 시연(위)과 목표 보정 방식(아래)</figcaption>')
 ARM = ['opencv', 'opencv-pose', 'opencv-locate'] if VARIANT == 'control' else ['opencv', 'opencv-locate', 'opencv-inspect']
 for k in ARM + ['plc', 'plc-detail', 'vision', 'vision-detail']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)

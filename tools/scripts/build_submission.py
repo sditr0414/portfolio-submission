@@ -26,6 +26,9 @@ def body_of(key):
     return re.search(r'<div class="slide-body">.*</div>\s*(?=<footer)', A[key], flags=re.S).group(0)
 
 # --- cover: short introduction only, skills in even rows
+rep('profile', '<p class="hero-line">설계부터 구현, 디버깅까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>',
+    '<p class="hero-line">펌웨어부터 로봇팔 제어까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>' if VARIANT == 'control' else
+    '<p class="hero-line">데이터 준비부터 모델 실행까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>')
 # submission copy: no contact line on the cover
 _c = re.search(r'<div class="contact-links">.*?</div>', A['profile'], flags=re.S).group(0)
 A['profile'] = A['profile'].replace(_c, '')

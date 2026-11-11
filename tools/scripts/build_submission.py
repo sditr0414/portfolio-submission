@@ -32,7 +32,12 @@ rep('profile', '<p class="hero-line">설계부터 구현, 디버깅까지<br/>�
 rep('profile', '<p class="intro-label">로봇 제어 · 비전 · 임베디드 신입</p>',
     '<p class="intro-label">로봇 제어 · 임베디드 신입</p>' if VARIANT == 'control' else '<p class="intro-label">로봇 비전 · 제어 신입</p>')
 rep('profile', '<p>C · C++<br/>STM32 · FreeRTOS · PLC</p>', '<p>C · C++ · STM32<br/>FreeRTOS · PLC</p>')
-rep('profile', '<p>Python · ROS2<br/>OpenCV · YOLO · TFLite</p>', '<p>Python · ROS2 · OpenCV<br/>YOLO · TFLite</p>')
+rep('profile', '<p>Python · ROS2<br/>OpenCV · YOLO · TFLite</p>',
+    '<p>Python · ROS2<br/>OpenCV · YOLO</p>' if VARIANT == 'control' else '<p>Python · ROS2 · OpenCV<br/>YOLO · TFLite</p>')
+if VARIANT == 'control':
+    _t = re.search(r'<h3>설계·개발 도구</h3><p>.*?</p>', A['profile'], flags=re.S).group(0)
+    assert all(k in _t for k in ('SolidWorks', 'Ansys', 'MATLAB', 'MuJoCo', 'Isaac Sim'))
+    A['profile'] = A['profile'].replace(_t, '<h3>설계·개발 도구</h3><p>SolidWorks · Ansys · MuJoCo<br/>GX Works2 · GT Designer3</p>')
 
 # --- robot arm (6 -> 3): overview / position / inspection + model
 rep('opencv', '<div><dt>진행 상태</dt><dd>프로젝트 진행 중</dd></div>', '<div><dt>인식 대상</dt><dd>부품·지그 13종</dd></div>')

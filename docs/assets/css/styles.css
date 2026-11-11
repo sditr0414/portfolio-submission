@@ -1188,9 +1188,9 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .slide .summary+.summary{margin-top:10px}
 .slide .summary strong{color:var(--deep);font-weight:700}
 #opencv-model .s26-pair img{max-height:112px;object-fit:cover}
-#opencv .overview-copy .summary{line-height:1.6}
-#opencv .overview-copy .summary+.summary{margin-top:7px}
 #opencv .overview-copy .role-block{margin-top:12px;margin-bottom:10px}
-#thesis .knock-wide img{max-height:124px}
-#thesis .knock-intro .summary{line-height:1.6}
-#thesis .knock-intro .summary+.summary{margin-top:6px}
+#thesis .knock-wide img{max-height:170px}
+.project-opening .overview-copy{align-self:center}
+.project-opening .overview-copy .summary+.summary{margin-top:14px}
+.project-opening .overview-copy .tags{margin-top:20px}
+.knock-intro{align-items:center}

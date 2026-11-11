@@ -170,7 +170,7 @@ else:
         '<div class="slide-body"><figure class="main-figure figure-board knock-wide"><img alt="실시간 노크 위치 탐지 화면: 센서 신호와 주파수 분석, 예측 구역, 아크릴판을 두드리는 손" '
         'src="assets/images/knock-realtime.webp" width="1436" height="397"/>'
         '<figcaption><b class="fig-no">그림 17. </b>실시간 탐지 화면 · 가운데 구역을 두드리자 시간·주파수 특징 모두 같은 구역으로 예측</figcaption></figure>'
-        '<div class="knock-intro"><div>' + summary + tags + '</div>' + role + '</div>' + specs + '</div>')
+        '<div class="knock-intro"><div>' + summary + '</div><div><!--K2-->' + tags + '</div></div>' + specs + '</div>')
     table = re.search(r'<table class="result-table">.*?</table>', A['thesis-results'], flags=re.S).group(0)
     A['thesis-results'] = A['thesis-results'].replace(body_of('thesis-results'),
         '<div class="slide-body"><div class="split submission-two knock-method"><div class="text-stack">'
@@ -202,8 +202,13 @@ set_summary('plc', [
     '컨베이어·실린더·서보모터로 공급·가공·분류·저장 공정을 연결했습니다',
     '금속·비금속을 판별해 <strong>1~4층 창고에 병렬로 적재</strong>하고,<br/>수동 모드에서는 층별로 개별 제어할 수 있게 했습니다',
     'HMI 화면에서 가공 횟수와 시간을 지정하고 적재 상태를 확인하게 했습니다'])
-ks = re.search(r'<p class="summary">.*?</p>', A['thesis'], flags=re.S).group(0)
-A['thesis'] = A['thesis'].replace(ks, ks + '<p class="summary">입력 특징을 <strong>센서 간 시간 차·시간 영역·주파수 영역</strong>으로 바꿔 가며<br/><strong>K-NN·SVM·ANN</strong> 모델의 위치 분류 정확도를 비교했습니다</p>', 1)
+_k2 = '<p class="summary">입력 특징을 <strong>센서 간 시간 차·시간 영역·주파수 영역</strong>으로 바꿔 가며<br/><strong>K-NN·SVM·ANN</strong> 모델의 위치 분류 정확도를 비교했습니다</p>'
+if '<!--K2-->' in A['thesis']:
+    A['thesis'] = A['thesis'].replace('<!--K2-->', _k2)
+# role blocks removed: every slide already shows only my own work
+for k in ['opencv', 'robot', 'vision', 'plc', 'thesis']:
+    A[k] = re.sub(r'<div class="role-block contribution">.*?</div>', '', A[k], flags=re.S)
+    assert 'role-block' not in A[k], k
 m = re.search(r'<div class="split">(<div class="text-stack">.*?</section></div>)(<div><figure class="roi-figure.*?</figure></div>)</div>', A['vision-detail'], flags=re.S)
 A['vision-detail'] = A['vision-detail'].replace(m.group(0), '<div class="split">' + m.group(2) + m.group(1) + '</div>')
 for k in keep:

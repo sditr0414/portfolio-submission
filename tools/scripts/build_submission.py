@@ -26,9 +26,6 @@ def body_of(key):
     return re.search(r'<div class="slide-body">.*</div>\s*(?=<footer)', A[key], flags=re.S).group(0)
 
 # --- cover: short introduction only, skills in even rows
-rep('profile', '<p class="hero-line">설계부터 구현, 디버깅까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>',
-    '<p class="hero-line">ROS2로 로봇팔 동작을 제어하고,<br/>STM32 펌웨어와 통신 규격을 만들었습니다</p>' if VARIANT == 'control' else
-    '<p class="hero-line">비전으로 로봇팔 동작을 보정하고,<br/>그 모델을 Raspberry Pi5에 올렸습니다</p>')
 # submission copy: no contact line on the cover
 _c = re.search(r'<div class="contact-links">.*?</div>', A['profile'], flags=re.S).group(0)
 A['profile'] = A['profile'].replace(_c, '')

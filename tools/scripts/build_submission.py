@@ -31,9 +31,9 @@ rep('profile', '<p class="hero-line">설계부터 구현, 디버깅까지<br/>�
     '<p class="hero-line">데이터 준비부터 모델 실행까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>')
 # education: status badge first, then the dates
 for _old, _st, _dt in [('<time>2026.04 – 2026.11 수료</time>', '수료', '2026.04 – 2026.11'),
-                       ('<time>2026.02 졸업</time>', '졸업', '2026.02'),
-                       ('<time>2019.02 졸업</time>', '졸업', '2019.02')]:
-    rep('resume', _old, f'<time><b class="edu-state">{_st}</b>{_dt}</time>')
+                       ('<time>2026.02 졸업</time>', '졸업', '2019.03 – 2026.02'),
+                       ('<time>2019.02 졸업</time>', '졸업', '2016.03 – 2019.02')]:
+    rep('resume', _old, f'<time><span class="edu-state">{_st}</span>{_dt}</time>')
 # submission copy: no contact line on the cover
 _c = re.search(r'<div class="contact-links">.*?</div>', A['profile'], flags=re.S).group(0)
 A['profile'] = A['profile'].replace(_c, '')

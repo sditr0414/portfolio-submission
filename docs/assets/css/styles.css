@@ -1147,3 +1147,14 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .knock-method .text-stack{gap:10px}.knock-method .text-stack section{padding-top:10px;padding-bottom:10px}
 .knock-method .text-stack h3{font-size:16.5px;margin-bottom:3px}.knock-method .text-stack p{font-size:14.5px;line-height:1.65}
 .knock-method .s26-take{margin-top:14px}
+
+/* submission deck alignment: same two-column grid, top edge and text scale on every project slide */
+.slide .sg{display:grid!important;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr)!important;gap:32px!important;align-items:start!important;flex:initial!important}
+#thesis-results .slide-body,#vision-detail .slide-body{justify-content:flex-start}
+.slide .sg .text-stack{gap:12px}
+.slide .sg .text-stack section{padding-top:12px;padding-bottom:12px}
+.slide .sg .text-stack h3{font-size:16.5px;margin-bottom:4px}
+.slide .sg .text-stack p{font-size:14.5px;line-height:1.7}
+.slide .sg .issue-table th,.slide .sg .issue-table td{font-size:14.5px;line-height:1.7;padding-top:13px;padding-bottom:13px}
+.slide .sg.knock-method .text-stack{gap:10px}.slide .sg.knock-method .text-stack section{padding-top:9px;padding-bottom:9px}
+.slide .sg .main-figure,.slide .sg .system-figure,.slide .sg .roi-figure{margin:0}

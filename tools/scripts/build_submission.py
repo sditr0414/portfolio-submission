@@ -147,6 +147,17 @@ else:
     rep('thesis-results', '>입력 특징별 K-NN 검증 결과</h2>', '>신호 수집부터 입력 특징별 K-NN 검증까지</h2>')
     rep('thesis-results', '<p class="deck">같은 아크릴판에서 수집한 데이터를 학습 70%, 검증 30%로 무작위 분할해 비교했습니다</p>',
         '<p class="deck">같은 아크릴판에서 수집한 신호를 전처리하고, 입력 특징을 바꿔 가며 위치 분류 정확도를 비교했습니다</p>')
+# --- one column grid on every project slide; figure on the left, text on the right
+rep('plc', '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고, 수동 모드에서는 개별 제어할 수 있게 했습니다</p>',
+    '공급·가공·분류·저장 공정을 연결했습니다<br/>여러 장치를 병렬로 운전하고,<br/>수동 모드에서는 개별 제어할 수 있게 했습니다</p>')
+m = re.search(r'<div class="split">(<div class="text-stack">.*?</section></div>)(<div><figure class="roi-figure.*?</figure></div>)</div>', A['vision-detail'], flags=re.S)
+A['vision-detail'] = A['vision-detail'].replace(m.group(0), '<div class="split">' + m.group(2) + m.group(1) + '</div>')
+for k in keep:
+    if k in ('profile', 'resume'):
+        continue
+    A[k], c = re.subn(r'(<div class="slide-body">\s*(?:<figure class="main-figure figure-board knock-wide">.*?</figure>)?<div class=")', r'\1sg ', A[k], count=1, flags=re.S)
+    assert c == 1, k
+
 n = len(keep); out = []; fig = 0
 def renum(m):
     global fig

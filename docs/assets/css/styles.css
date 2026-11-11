@@ -1244,3 +1244,9 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .cover .site-arrow{width:14px;height:14px;color:#fff;flex:none}
 #thesis-results .result-table{border-collapse:collapse;border-top:2px solid var(--deep);border-bottom:1px solid #9fb2c4;border-left:1px solid #c5d2de;border-right:1px solid #c5d2de}
 #thesis-results .result-table tbody th,#thesis-results .result-table td{border-top:1px solid #c5d2de}
+.slide .issue-table{outline:1px solid #c5d2de;outline-offset:-1px}
+.slide .s26-table tr>:first-child{border-left:1px solid #c5d2de}
+.slide .s26-table tr>:last-child{border-right:1px solid #c5d2de}
+.slide .s26-table tbody tr:last-child>*{border-bottom:1px solid #9fb2c4}
+.slide dl.process-list{border-left:1px solid #c5d2de;border-right:1px solid #c5d2de;border-bottom:1px solid #9fb2c4}
+.slide .issue-table{border-bottom:1px solid #9fb2c4}

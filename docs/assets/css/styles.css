@@ -1214,3 +1214,5 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .slide.project-opening .sg .ov-stack p{font-size:14px!important;line-height:1.58!important}
 #thesis .knock-wide img{max-height:140px}
 .slide.project-opening .sg .ov-stack section{flex:1 1 auto!important}
+.resume-entry time{display:flex;align-items:center;gap:9px}
+.resume-entry time .edu-state{display:inline-block;padding:1px 8px;border:1px solid var(--blue-line);border-radius:3px;background:var(--tint);color:var(--deep);font-size:12px;font-weight:700;letter-spacing:0}

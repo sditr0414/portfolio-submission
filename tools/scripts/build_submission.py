@@ -29,6 +29,11 @@ def body_of(key):
 rep('profile', '<p class="hero-line">설계부터 구현, 디버깅까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>',
     '<p class="hero-line">펌웨어부터 로봇팔 제어까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>' if VARIANT == 'control' else
     '<p class="hero-line">데이터 준비부터 모델 실행까지<br/>어느 단계도 가볍게 넘기지 않습니다</p>')
+# education: status badge first, then the dates
+for _old, _st, _dt in [('<time>2026.04 – 2026.11 수료</time>', '수료', '2026.04 – 2026.11'),
+                       ('<time>2026.02 졸업</time>', '졸업', '2026.02'),
+                       ('<time>2019.02 졸업</time>', '졸업', '2019.02')]:
+    rep('resume', _old, f'<time><b class="edu-state">{_st}</b>{_dt}</time>')
 # submission copy: no contact line on the cover
 _c = re.search(r'<div class="contact-links">.*?</div>', A['profile'], flags=re.S).group(0)
 A['profile'] = A['profile'].replace(_c, '')
@@ -190,7 +195,7 @@ def set_summary(k, paras):
     old = re.search(r'<p class="summary">.*?</p>', A[k], flags=re.S).group(0)
     A[k] = A[k].replace(old, '<div class="text-stack ov-stack">' + ''.join(f'<section><h3>{h}</h3><p>{t}</p></section>' for h, t in paras) + '</div>', 1)
 set_summary('opencv', [
-    ('해결한 문제', '운반 로봇의 정차 위치가 달라지고 부품이 서로 가려도<br/>저장한 동작으로 조립·하차 공정을 이어가게 했습니다'),
+    ('만든 것', '로봇팔 2대가 지그 도착부터 조립, 완제품 하차까지 맡는 작업대를 만들었습니다<br/>정차 위치가 달라지고 부품이 서로 가려도 공정이 이어지게 했습니다'),
     ('방법', '카메라로 <strong>지그를 다시 측정해 동작 목표를 보정</strong>하고,<br/><strong>부품 종류와 안착 상태를 검사</strong>했습니다'),
     ('동작 제어', '<strong>ROS2 Action</strong>으로 작업 요청을 받고,<br/>순기구학·역기구학으로 집게 목표와 관절값을 계산했습니다') if VARIANT == 'control' else
     ('인식 모델', '지그·팔레트와 부품은 <strong>YOLO26 분할 모델</strong>과 설계 형상 맞춤으로 찾고,<br/>모델은 <strong>Raspberry Pi5</strong>에서 실행했습니다')])

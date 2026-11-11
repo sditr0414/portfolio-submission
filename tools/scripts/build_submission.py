@@ -231,6 +231,10 @@ set_summary('vision', [
 _k2 = '<p>입력 특징을 <strong>센서 간 시간 차·시간 영역·주파수 영역</strong>으로 바꿔 가며<br/><strong>K-NN·SVM·ANN</strong> 모델의 위치 분류 정확도를 비교했습니다</p>'
 if '<!--K2-->' in A['thesis']:
     A['thesis'] = A['thesis'].replace('<!--K2-->', _k2)
+# technology tags removed from the overviews (the cards already name what was used)
+for k in ['opencv', 'robot', 'vision', 'plc', 'thesis']:
+    A[k] = re.sub(r'<div class="tags">.*?</div>', '', A[k], flags=re.S)
+    assert 'class="tags"' not in A[k], k
 # role blocks removed: every slide already shows only my own work
 for k in ['opencv', 'robot', 'vision', 'plc', 'thesis']:
     A[k] = re.sub(r'<div class="role-block contribution">.*?</div>', '', A[k], flags=re.S)

@@ -1195,3 +1195,8 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .project-opening .overview-copy .tags{margin-top:20px}
 .knock-intro{align-items:center}
 .cover .hero-line{margin-bottom:0}
+.cover .hero-grid{align-items:stretch}
+.cover .hero-copy{display:flex;flex-direction:column;justify-content:space-between;padding:14px 0 10px}
+.cover .hero-copy h1{font-size:64px;margin-top:4px}
+.cover .intro-label{font-size:15.5px}
+.cover .hero-line{font-size:27px;line-height:1.55;margin-top:auto}

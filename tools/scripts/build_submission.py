@@ -12,7 +12,8 @@ VARIANT = sys.argv[1] if len(sys.argv) > 1 else 'control'
 assert VARIANT in ('control', 'vision'), VARIANT
 from pathlib import Path
 P = Path(__file__).resolve().parents[2] / 'docs' / 'index.html'
-t = P.read_text()
+SRC = Path(__file__).resolve().parents[2] / 'tools' / 'source' / 'master.html'
+t = SRC.read_text()
 arts = re.findall(r'<article.*?</article>', t, flags=re.S)
 assert len(arts) == 19, len(arts)
 head, tail = t[:t.index('<section class="page-shell"')], t[t.rindex('</section></main>'):]
@@ -277,5 +278,18 @@ html = head + '</section>'.join(out) + tail
 html = html.replace('<span id="mobile-count">01 / 19</span>', f'<span id="mobile-count">01 / {n:02d}</span>')
 for sec in dropped:
     html, c = re.subn(rf'<a aria-label="[^"]*" data-label="[^"]*" data-section="{sec}".*?</a>', '', html, flags=re.S); assert c == 1, sec
+# two submission versions: switch link in the header, per-version PDF names
+other = ('vision.html', '비전형 보기') if VARIANT == 'control' else ('index.html', '제어형 보기')
+a0 = '<div class="pdf-menu">'
+assert html.count(a0) == 1
+html = html.replace(a0, f'<a class="variant-switch" href="{other[0]}">{other[1]}</a>' + a0)
+tag = '제어형' if VARIANT == 'control' else '비전형'
+suffix = '' if VARIANT == 'control' else '-vision'
+for old_name, base in [('정승호_포트폴리오_슬라이드.pdf', 'slides'), ('정승호_포트폴리오_A4_2슬라이드.pdf', 'handout')]:
+    assert html.count(old_name) == 1
+    html = html.replace(old_name, old_name.replace('포트폴리오_', f'제출용_포트폴리오_{tag}_'))
+    html, c = re.subn(rf'assets/pdf/{base}\.pdf\?v=[\w-]+', f'assets/pdf/{base}{suffix}.pdf?v=20261112', html); assert c == 1, base
+html, c = re.subn(r'styles\.css\?v=[\w-]+', 'styles.css?v=20261112', html); assert c == 1
+html = html.replace('<title>정승호 | 포트폴리오</title>', f'<title>정승호 | 제출용 포트폴리오 · {tag}</title>')
 P.write_text(html)
 print('slides', n, 'figures', fig)

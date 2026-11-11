@@ -69,11 +69,32 @@ for n, k in enumerate(ARM, 1):
 # --- mobile robot (3 -> 2): structure and fixes on one text slide
 stack = re.search(r'<div class="text-stack">.*?</section></div>', A['robot-system'], flags=re.S).group(0)
 issues = re.search(r'<table class="issue-table">.*?</table>', A['robot-detail'], flags=re.S).group(0)
+def _row(th, why, fix):
+    return f'<tr><th scope="row">{th}</th><td><span class="why"><b>원인</b>{why}</span>{fix}</td></tr>'
+issues = ('<table class="issue-table"><thead><tr><th scope="col">문제</th><th scope="col">원인과 개선 내용</th></tr></thead><tbody>'
+    + _row('부하가 걸릴 때의 떨림', '긴 케이블과 커넥터 저항으로 서보 단자 전압이 순간적으로 낮아짐',
+           '전원 배선 점검, 전원부 커패시터 추가, 토크 여유가 있는 서보로 교체<br/><strong>물건을 들 때 손목·그리퍼의 떨림 감소</strong>')
+    + _row('관절의 급격한 움직임', '목표 각도를 한 번에 주면 펄스폭이 급격히 바뀌어 속도가 불연속',
+           '<strong>20ms마다 펄스폭을 단계적으로 바꾸는 S-curve</strong> 적용<br/>변화량을 작게 → 크게 → 작게 주어 출발과 정지를 완만하게 함')
+    + _row('관절 원점·가동 범위', '같은 자세라도 필요한 펄스값이 서보마다 다름',
+           '<strong>−90°·0°·+90° 3점 보정</strong>으로 원점·리미트 설정<br/>서보별 실측 펄스값을 저장해 관절 제어에 반영')
+    + _row('고속 주행 시 방향 보정', 'PWM이 최댓값 255에 닿아 PID 보정값이 모터 출력에 반영되지 않음',
+           '<strong>최대 출력을 220 PWM으로 제한</strong>해 좌우 보정 여유 확보')
+    + '</tbody></table>')
 A['robot-system'] = A['robot-system'].replace(body_of('robot-system'),
     '<div class="slide-body"><div class="split submission-two">' + stack + '<div class="app-cases">' + issues + '</div></div></div>')
 rep('robot-system', '>로봇팔 제어와 시스템 통신 구조</h2>', '>16바이트 통신 규격과 구동 문제 개선</h2>')
 rep('robot-system', '<p class="deck">16바이트 통신 규격으로 서보 제어·보정·티칭 데이터를 주고받고 저장합니다</p>',
     '<p class="deck">16바이트 규격으로 앱과 펌웨어를 연결하고, 부하 시 떨림과 급격한 움직임을 줄였습니다</p>')
+_plc_old = re.search(r'<dl class="process-list">.*?</dl>', A['plc-detail'], flags=re.S).group(0)
+_plc_rows = [
+ ('문제 1', "병렬 운전 중 '빈 층을 찾았다'는 값과 '그 층에 소재가 있다'는 값이 한 메모리에 섞여<br/><strong>이전 동작의 상태가 다음 시퀀스의 판단에 영향</strong>"),
+ ('개선', '<strong>판단용·적재용 메모리 분리</strong><br/>판단값은 적재가 끝나면 초기화하고, 적재값은 소재를 뺄 때까지 유지'),
+ ('문제 2', '각자 작성한 코드를 통합하자 <strong>같은 메모리 주소를 서로 다른 용도로 사용</strong>해 시퀀스가 꼬임'),
+ ('개선', '사용 중인 주소를 모두 모아 대조하고 <strong>겹치는 주소 정리</strong><br/>코멘트에 사용 주소를 적어 서로 확인'),
+ ('배운 점', '코드 통합 전 <strong>메모리 사용 주소 합의</strong>가 중요함<br/>병렬 동작에서는 장치별 동작 조건·완료 조건·인터록을 먼저 정해야 함'),
+]
+A['plc-detail'] = A['plc-detail'].replace(_plc_old, '<dl class="process-list">' + ''.join(f'<div><dt>{a}</dt><dd>{b}</dd></div>' for a, b in _plc_rows) + '</dl>')
 for k in ['robot', 'robot-system']:
     A[k] = re.sub(r'<nav aria-label="[^"]*" class="stage-nav">.*?</nav>', '', A[k], flags=re.S)
     A[k] = re.sub(r'(<span class="part-number">\d) / 3</span>', r'\1 / 2</span>', A[k])

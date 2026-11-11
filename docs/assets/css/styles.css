@@ -1212,7 +1212,10 @@ th.cat::before,td.cat::before{content:"";display:inline-block;width:8px;height:8
 .slide.project-opening .sg .ov-stack section{padding-top:7px!important;padding-bottom:7px!important}
 .slide.project-opening .sg .ov-stack h3{font-size:15.5px!important;margin-bottom:1px!important}
 .slide.project-opening .sg .ov-stack p{font-size:14px!important;line-height:1.58!important}
-#thesis .knock-wide img{max-height:140px}
+#thesis .knock-wide img{max-height:150px}
 .slide.project-opening .sg .ov-stack section{flex:1 1 auto!important}
 .resume-entry time{display:flex;align-items:center;gap:0}
 .resume-entry time .edu-state{padding-right:9px;margin-right:9px;border-right:1px solid #b9c6d3;line-height:1.1}
+#opencv-locate .sg{align-items:stretch!important}
+#opencv-locate .sg>.text-stack{display:flex;flex-direction:column}
+#opencv-locate .sg>.text-stack section{flex:1 1 0;display:flex;flex-direction:column;justify-content:center}

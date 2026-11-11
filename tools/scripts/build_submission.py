@@ -132,6 +132,11 @@ rep('robot', '물품 회수·운반 시연품입니다<br/>', '물품 회수·�
 rep('robot', '저장한 동작을 재생합니다</p>', '저장한 동작을 재생하게 했습니다</p>')
 rep('vision', '인도와 차도를 구분합니다<br/>', '인도와 차도를 구분했습니다<br/>')
 rep('vision', '음성으로 알려 줍니다</p>', '음성으로 알려 주게 했습니다</p>')
+rep('vision', '<p class="summary">영상에서 사람·차량·장애물을 탐지하고 인도와 차도를 구분했습니다<br/>보행 경로에 가까운 대상을 판단해 음성으로 알려 주게 했습니다</p>',
+    '<p class="summary">시각장애인의 보행을 돕는 웨어러블 장치를 만들었습니다<br/>카메라 영상에서 사람·차량·장애물을 탐지하고 인도와 차도를 구분했습니다</p>'
+    '<p class="summary">객체는 <strong>YOLO26n 객체 검출</strong> 모델로 위치를 찾고,<br/>지면은 <strong>YOLO26n-seg 인스턴스 분할</strong> 모델로 영역을 나눴습니다</p>'
+    '<p class="summary">보행 경로에 가까운 대상을 판단해 음성으로 알려 주게 했습니다</p>')
+rep('vision', '<span>YOLO26n</span>', '<span>YOLO26n · YOLO26n-seg</span>')
 
 def renumber(k, old, new):
     A[k] = A[k].replace(f'aria-label="프로젝트 {old}" class="project-number">{old}</b>', f'aria-label="프로젝트 {new}" class="project-number">{new}</b>')

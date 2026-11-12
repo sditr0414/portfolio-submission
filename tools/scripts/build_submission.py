@@ -245,7 +245,7 @@ _specs('vision', [('수행 시기', '2026.05 · 11일'), ('라벨 통합', '객�
 _specs('thesis', [('논문 제출', '2023.05'), ('수집 데이터', '센서 8개 · 9구역 × 140회')],
        '주제 제안 · MATLAB 전처리·특징 추출 · 모델 비교 · 실시간 탐지 구현')
 if 'thesis-results' in A:
-    for o, n in [('90.741<span>', '90.7<span>'), ('96.296<span>', '96.3<span>'), ('97.884<span>', '97.9<span>')]:
+    for o, n in [('90.741<span>', '90.74<span>'), ('96.296<span>', '96.30<span>'), ('97.884<span>', '97.88<span>')]:
         if o in A['thesis-results']: A['thesis-results'] = A['thesis-results'].replace(o, n)
 # technology tags removed from the overviews (the cards already name what was used)
 for k in ['opencv', 'robot', 'vision', 'plc', 'thesis']:
